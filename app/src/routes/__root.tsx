@@ -259,6 +259,18 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
     });
   }
 
+  const commercialFaqPaths = new Set(["/plavuchie-konstrukcii","/pirsy-prichaly","/plavuchie-garazhi-ellingi","/pontony-dlya-hausbota","/pontony-dlya-bani","/pontony-dlya-besedki","/pontony-dlya-sceny","/pontony-dlya-katerov","/pontony-dlya-restorana","/pontony-dlya-sadkov"]);
+
+  if (commercialFaqPaths.has(pathname)) {
+    const questions = [
+      ["Можно ли изготовить конструкцию по индивидуальным размерам?", "Да. Размеры и конфигурация определяются по задаче, нагрузке и условиям эксплуатации конкретного объекта."],
+      ["Что нужно для предварительного расчёта?", "Достаточно сообщить назначение, примерные размеры, предполагаемую нагрузку и место установки. Фотография объекта также помогает оценить задачу."],
+      ["Можно ли заказать доставку и монтаж?", "Да, доставку и монтаж можно включить в состав проекта. Конкретный состав работ определяется после уточнения объекта и условий доступа."],
+      ["Как узнать стоимость?", "Стоимость зависит от размеров, нагрузки, комплектации, доставки и монтажа. Для предварительного расчёта отправьте исходные данные через калькулятор."],
+    ];
+    graph.push({"@type":"FAQPage",mainEntity:questions.map(([name,text])=>({"@type":"Question",name,acceptedAnswer:{"@type":"Answer",text}}))});
+  }
+
   if (pathname === "/faq") {
     const questions = [
       ["Сколько стоит понтон?", "Стоимость зависит от размеров, нагрузки, назначения, комплектации и условий установки."],
