@@ -12,18 +12,31 @@ export const directions=[
 ['Понтоны для садков','/pontony-dlya-sadkov','Плавучие конструкции для рыбоводческих хозяйств.','piers-ponton']] as const;
 const img=(name:string)=>`https://ponton-piers.ru/assets/cache_image/images/${name}_760x400_898.png`;
 const navItems=[['Конструкции','/plavuchie-konstrukcii'],['Проекты','/proekty'],['Услуги','/uslugi'],['Производство','/proizvodstvo'],['О компании','/o-kompanii'],['Контакты','/kontakty']] as const;
+export const serviceItems=[['Регистрация плавучих конструкций','/registraciya-plavuchih-konstrukcii'],['Договор водопользования','/dogovor-vodopolzovaniya'],['Техническое обслуживание пирсов','/texnicheskoe-obsluzhivanie-pirsov']] as const;
 export function Header(){
   const [open,setOpen]=useState(false);
   const close=()=>setOpen(false);
   return <header className={`site-header${open?' menu-open':''}`}>
     <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
-    <nav className="desktop-nav">{navItems.map(([label,href])=><a key={href} href={href}>{label}</a>)}</nav>
+    <nav className="desktop-nav">
+      {navItems.map(([label,href])=>label==='Услуги' ? <div className="nav-dropdown" key={href}>
+        <a href={href} className="nav-dropdown-trigger">Услуги <span>⌄</span></a>
+        <div className="nav-dropdown-menu">
+          {serviceItems.map(([serviceLabel,serviceHref])=><a key={serviceHref} href={serviceHref}>{serviceLabel}</a>)}
+        </div>
+      </div> : <a key={href} href={href}>{label}</a>)}
+    </nav>
     <a className="header-cta" href="/kalkulyator">Рассчитать стоимость <span>↗</span></a>
     <button className="mobile-menu-toggle" type="button" aria-label={open?'Закрыть меню':'Открыть меню'} aria-expanded={open} onClick={()=>setOpen(v=>!v)}>
       <span></span><span></span><span></span>
     </button>
     {open&&<nav className="mobile-nav" aria-label="Мобильное меню">
-      {navItems.map(([label,href])=><a key={href} href={href} onClick={close}>{label}</a>)}
+      {navItems.map(([label,href])=>label==='Услуги' ? <div className="mobile-nav-group" key={href}>
+        <a className="mobile-nav-parent" href={href} onClick={close}>Услуги</a>
+        <div className="mobile-nav-submenu">
+          {serviceItems.map(([serviceLabel,serviceHref])=><a key={serviceHref} href={serviceHref} onClick={close}>{serviceLabel}</a>)}
+        </div>
+      </div> : <a key={href} href={href} onClick={close}>{label}</a>)}
       <a className="mobile-nav-cta" href="/kalkulyator" onClick={close}>Рассчитать стоимость <span>↗</span></a>
     </nav>}
   </header>
@@ -34,4 +47,5 @@ export function DirectionGrid(){return <section className="section direction-sec
 export function CTA({title='Обсудим ваш проект',text='Опишите задачу, приложите размеры или фотографию места. Мы предложим конструкцию и подготовим расчёт.'}:{title?:string;text?:string}){return <section className="cta-section"><div><span className="eyebrow">Начнём с задачи</span><h2>{title}</h2><p>{text}</p></div><a className="cta-dark" href="/kalkulyator">Получить расчёт <span>→</span></a></section>}
 export function InnerHero({eyebrow,title,text,image='piers-ponton'}:{eyebrow:string;title:string;text:string;image?:string}){return <section className="inner-hero"><div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{text}</p><a className="cta-dark" href="/kalkulyator">Рассчитать конструкцию <span>→</span></a></div><img src={img(image)} alt={title}/></section>}
 export function FeatureRows({items}:{items:[string,string,string][]}){return <div className="feature-rows">{items.map(([n,t,d])=><div className="feature-row" key={n}><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div></div>)}</div>}
+export function ServiceSection({eyebrow,title,children}:{eyebrow:string;title:string;children:ReactNode}){return <section className="service-section"><div className="service-section-head"><span className="eyebrow">{eyebrow}</span><h2>{title}</h2></div><div className="service-section-body">{children}</div></section>}
 export function SimplePage({eyebrow,title,text,children}:{eyebrow:string;title:string;text:string;children:ReactNode}){return <Shell><main className="inner-page"><InnerHero eyebrow={eyebrow} title={title} text={text}/>{children}<CTA/></main></Shell>}
