@@ -23,15 +23,18 @@ jobs:
             REPO=/var/www/www-root/data/www/new.ponton-piers.ru
             APP=$REPO/app
 
-            echo "=== Git configuration ==="
-            git config --global --add safe.directory "$REPO"
-
             cd "$APP"
 
-            echo "=== Git update ==="
-            # Avoid writing the root-owned remote-tracking reflog on the server.
-            git -c core.logAllRefUpdates=false fetch origin main
-            git reset --hard origin/main
+            echo "=== Download source ==="
+            TMP=$(mktemp -d)
+            trap 'rm -rf "$TMP"' EXIT
+            curl -fsSL "https://github.com/felixpetro/new-ponton-piers.ru/archive/refs/heads/main.tar.gz" -o "$TMP/source.tar.gz"
+            tar -xzf "$TMP/source.tar.gz" -C "$TMP"
+            SRC=$(find "$TMP" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+
+            echo "=== Sync source ==="
+            find "$REPO" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+            cp -a "$SRC"/. "$REPO"/
 
             echo "=== Install dependencies ==="
             /usr/local/bin/bun install --frozen-lockfile
