@@ -268,9 +268,14 @@ function buildHead(meta: AppMeta, pathname: string) {
   const title = entry.title;
   const description = entry.description;
   const canonical = SITE_URL + (pathname === "/" ? "/" : pathname);
-  const ogImage = toOwnAssetUrl(meta.og_image_url);
+  const assetUrl = (value: string | null) => {
+    if (!value) return null;
+    if (value.startsWith("/")) return SITE_URL + value;
+    return value;
+  };
+  const ogImage = assetUrl(meta.og_image_url);
   const favicon = toOwnAssetUrl(meta.favicon_url);
-  const ogVideo = toOwnAssetUrl(meta.og_video_url);
+  const ogVideo = assetUrl(meta.og_video_url);
 
   return {
     meta: [
@@ -280,6 +285,7 @@ function buildHead(meta: AppMeta, pathname: string) {
       { name: "description", content: description },
       { name: "author", content: "Понтон Пирс" },
       { name: "robots", content: entry.noindex ? "noindex, follow" : "index, follow" },
+      { name: "theme-color", content: "#111111" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: entry.type ?? "website" },
@@ -292,8 +298,10 @@ function buildHead(meta: AppMeta, pathname: string) {
       ...(ogImage
         ? [
             { property: "og:image", content: ogImage },
-            { name: "twitter:image", content: ogImage },
+            { property: "og:image:secure_url", content: ogImage },
             { property: "og:image:alt", content: title },
+            { name: "twitter:image", content: ogImage },
+            { name: "twitter:image:alt", content: title },
           ]
         : []),
       ...(ogVideo ? [{ property: "og:video", content: ogVideo }] : []),
