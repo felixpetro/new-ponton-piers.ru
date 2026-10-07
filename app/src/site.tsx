@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 export const directions=[
 ['Пирсы и причалы','/pirsy-prichaly','Плавучие пирсы для частных и коммерческих объектов.','piers-ponton'],
 ['Плавучие гаражи Эллинги','/plavuchie-garazhi-ellingi','Платформы для хранения лодок, катеров и яхт.','naves-ponton'],
@@ -11,7 +11,23 @@ export const directions=[
 ['Понтоны для ресторанов','/pontony-dlya-restorana','Платформы для ресторанов и объектов на воде.','rest-ponton'],
 ['Понтоны для садков','/pontony-dlya-sadkov','Плавучие конструкции для рыбоводческих хозяйств.','piers-ponton']] as const;
 const img=(name:string)=>`https://ponton-piers.ru/assets/cache_image/images/${name}_760x400_898.png`;
-export function Header(){return <header className="site-header"><Link to="/" className="brand"><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link><nav className="desktop-nav"><a href="/plavuchie-konstrukcii">Конструкции</a><a href="/proekty">Проекты</a><a href="/uslugi">Услуги</a><a href="/proizvodstvo">Производство</a><a href="/o-kompanii">О компании</a><a href="/kontakty">Контакты</a></nav><a className="header-cta" href="/kalkulyator">Рассчитать стоимость <span>↗</span></a></header>}
+const navItems=[['Конструкции','/plavuchie-konstrukcii'],['Проекты','/proekty'],['Услуги','/uslugi'],['Производство','/proizvodstvo'],['О компании','/o-kompanii'],['Контакты','/kontakty']] as const;
+export function Header(){
+  const [open,setOpen]=useState(false);
+  const close=()=>setOpen(false);
+  return <header className={`site-header${open?' menu-open':''}`}>
+    <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
+    <nav className="desktop-nav">{navItems.map(([label,href])=><a key={href} href={href}>{label}</a>)}</nav>
+    <a className="header-cta" href="/kalkulyator">Рассчитать стоимость <span>↗</span></a>
+    <button className="mobile-menu-toggle" type="button" aria-label={open?'Закрыть меню':'Открыть меню'} aria-expanded={open} onClick={()=>setOpen(v=>!v)}>
+      <span></span><span></span><span></span>
+    </button>
+    {open&&<nav className="mobile-nav" aria-label="Мобильное меню">
+      {navItems.map(([label,href])=><a key={href} href={href} onClick={close}>{label}</a>)}
+      <a className="mobile-nav-cta" href="/kalkulyator" onClick={close}>Рассчитать стоимость <span>↗</span></a>
+    </nav>}
+  </header>
+}
 export function Footer(){return <footer className="footer"><div className="footer-top"><div><div className="brand footer-brand"><img className="site-logo-img footer-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></div><p>Проектируем и производим понтоны, пирсы и плавучие конструкции по индивидуальным задачам.</p></div><div><strong>Конструкции</strong>{directions.slice(0,5).map(d=><a key={d[1]} href={d[1]}>{d[0]}</a>)}</div><div><strong>Компания</strong><a href="/proekty">Проекты</a><a href="/uslugi">Услуги</a><a href="/proizvodstvo">Производство</a><a href="/o-kompanii">О компании</a><a href="/otzyvy">Отзывы</a></div><div><strong>Связь</strong><a href="/kontakty">Контакты</a><a href="/kalkulyator">Рассчитать стоимость</a><a href="/faq">FAQ</a><span>Пн–Пт, 09:00–18:00</span></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Понтон Пирс</span><span>Производство · Санкт-Петербург · Доставка по России</span><a href="/privacy">Политика конфиденциальности</a></div></footer>}
 export function Shell({children}:{children:ReactNode}){return <><Header/>{children}<Footer/></>}
 export function DirectionGrid(){return <section className="section direction-section" id="directions"><div className="section-head"><span className="eyebrow">09 направлений</span><h2>Плавучие конструкции<br/>для любых задач</h2><p>От частного пирса до сложного коммерческого объекта. Подбираем конструкцию под нагрузку, размеры и условия эксплуатации.</p></div><div className="direction-grid">{directions.map((d,i)=><a className="direction-card" href={d[1]} key={d[1]}><img src={img(d[3])} alt={d[0]}/><div className="direction-copy"><span>0{i+1}</span><h3>{d[0]}</h3><p>{d[2]}</p><b>Смотреть решение ↗</b></div></a>)}</div></section>}
