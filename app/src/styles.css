@@ -543,3 +543,13 @@ main:has(.journey-wrap) .projects-section > .center-link{
 @media(min-width:761px){
   .mobile-menu-toggle,.mobile-nav{display:none!important}
 }
+
+
+/* Mobile header: keep the burger visible next to the logo. */
+@media(max-width:760px){
+  .site-header{gap:12px;overflow:visible}
+  .site-header .brand{min-width:0;max-width:calc(100% - 56px)}
+  .site-header .site-logo-img{width:190px;height:58px;max-width:100%;object-fit:contain}
+  .site-header .header-cta{display:none!important}
+  .site-header .mobile-menu-toggle{display:flex!important;margin-left:auto;flex:0 0 44px}
+}
