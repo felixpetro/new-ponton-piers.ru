@@ -32,9 +32,9 @@ jobs:
             tar -xzf "$TMP/source.tar.gz" -C "$TMP"
             SRC=$(find "$TMP" -mindepth 1 -maxdepth 1 -type d | head -n 1)
 
-            echo "=== Sync source ==="
-            find "$REPO" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-            cp -a "$SRC"/. "$REPO"/
+            echo "=== Sync application ==="
+            # Keep server-managed files (.git, .github and web-server config) untouched.
+            cp -a "$SRC/app"/. "$APP"/
 
             echo "=== Install dependencies ==="
             /usr/local/bin/bun install --frozen-lockfile
