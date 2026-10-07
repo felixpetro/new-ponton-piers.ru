@@ -212,8 +212,18 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
       address: {
         "@type": "PostalAddress",
         addressLocality: "Санкт-Петербург",
+        postalCode: "195027",
         streetAddress: "проспект Энергетиков, 10",
         addressCountry: "RU",
+      },
+      telephone: "+78003501181",
+      email: "info@ponton-piers.ru",
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+78003501181",
+        contactType: "customer service",
+        areaServed: "RU",
+        availableLanguage: ["ru"],
       },
       openingHours: ["Mo-Fr 09:00-18:00"],
       areaServed: "Россия",

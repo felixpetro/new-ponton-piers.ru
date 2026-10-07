@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const SITE_URL = "https://new.ponton-piers.ru";
+const IS_STAGING = SITE_URL.includes("new.");
 
 export const Route = createFileRoute("/robots.txt")({
   server: {
@@ -8,7 +9,7 @@ export const Route = createFileRoute("/robots.txt")({
       GET: async () => {
         const body = [
           "User-agent: *",
-          "Allow: /",
+          IS_STAGING ? "Disallow: /" : "Allow: /",
           "",
           `Sitemap: ${SITE_URL}/sitemap.xml`,
         ].join("\n");
