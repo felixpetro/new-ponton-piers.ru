@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 export const directions=[
 ['Пирсы и причалы','/pirsy-prichaly','Плавучие пирсы для частных и коммерческих объектов.','piers-ponton'],
 ['Плавучие гаражи Эллинги','/plavuchie-garazhi-ellingi','Платформы для хранения лодок, катеров и яхт.','naves-ponton'],
@@ -17,6 +17,15 @@ export function Header(){
   const [open,setOpen]=useState(false);
   const [servicesOpen,setServicesOpen]=useState(false);
   const close=()=>{setOpen(false);setServicesOpen(false)};
+  useEffect(()=>{
+    if(!servicesOpen) return;
+    const handleOutside=(event:MouseEvent)=>{
+      const target=event.target as HTMLElement;
+      if(!target.closest('.nav-dropdown')) setServicesOpen(false);
+    };
+    document.addEventListener('mousedown',handleOutside);
+    return()=>document.removeEventListener('mousedown',handleOutside);
+  },[servicesOpen]);
   return <header className={`site-header${open?' menu-open':''}`}>
     <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
     <nav className="desktop-nav">
