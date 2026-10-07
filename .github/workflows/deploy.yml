@@ -53,6 +53,11 @@ jobs:
               echo "=== Dependencies unchanged; skip install ==="
             fi
 
+            echo "=== Remove stale SEO files ==="
+            # These files can shadow the TanStack server routes when an older
+            # static copy was left on the server from a previous deployment.
+            rm -f "$REPO/sitemap.xml" "$REPO/robots.txt" "$APP/sitemap.xml" "$APP/robots.txt" "$APP/public/sitemap.xml" "$APP/public/robots.txt"
+
             echo "=== Build ==="
             /usr/local/bin/bun run build
 
