@@ -590,7 +590,7 @@ main:has(.journey-wrap) .projects-section > .center-link{
 
 .service-page .inner-hero{border-bottom:1px solid var(--pp-line)}
 .service-section{width:min(var(--pp-container),calc(100% - 48px));margin:0 auto;padding:78px 0;border-bottom:1px solid var(--pp-line)}
-.service-section-head{display:grid;grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr);gap:50px;align-items:start;margin-bottom:36px}
+.service-section-head{display:block;margin-bottom:36px}.service-section-head h2{max-width:820px}
 .service-section-head h2{margin:0;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.04em}
 .service-section-body{max-width:860px;margin-left:auto}
 .service-section-body>p{max-width:760px;margin:0 0 18px;color:var(--pp-muted);line-height:1.8;font-size:15px}
