@@ -268,7 +268,7 @@ function buildHead(meta: AppMeta, pathname: string) {
   const title = entry.title;
   const description = entry.description;
   const canonical = SITE_URL + (pathname === "/" ? "/" : pathname);
-  const assetUrl = (value: string | null) => {
+  const assetUrl = (value: string | null | undefined) => {
     if (!value) return null;
     if (value.startsWith("/")) return SITE_URL + value;
     return value;
