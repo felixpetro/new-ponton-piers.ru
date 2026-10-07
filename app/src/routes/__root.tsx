@@ -160,7 +160,6 @@ const SEO: Record<string, SeoEntry> = {
     title: "Статьи о понтонах и плавучих конструкциях | Понтон Пирс",
     description:
       "Полезные статьи о выборе понтонов, расчёте плавучести, материалах, креплении, монтаже и эксплуатации плавучих конструкций.",
-    type: "article",
   },
   "/privacy": {
     title: "Политика конфиденциальности | Понтон Пирс",
@@ -212,7 +211,6 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
       address: {
         "@type": "PostalAddress",
         addressLocality: "Санкт-Петербург",
-        addressRegion: "Ленинградская область",
         postalCode: "195027",
         streetAddress: "проспект Энергетиков, 10",
         addressCountry: "RU",
