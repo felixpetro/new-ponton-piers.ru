@@ -20,7 +20,7 @@ function Page(){
       <section className="service-section">
         <div className="service-section-head">
           <span className="eyebrow">Преимущества</span>
-          <h2>Преимущества заказа плавучей конструкции у компании "Понтон Пирс"</h2>
+          <h2 className="advantages-title">Преимущества заказа плавучей конструкции у компании "Понтон Пирс"</h2>
         </div>
         <div className="service-options">
           <div>
