@@ -23,6 +23,8 @@ jobs:
             REPO=/var/www/www-root/data/www/new.ponton-piers.ru
             APP=$REPO/app
 
+            echo "=== Prepare application directory ==="
+            mkdir -p "$APP"
             cd "$APP"
 
             echo "=== Download source ==="
