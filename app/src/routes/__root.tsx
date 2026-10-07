@@ -17,7 +17,7 @@ import appMetaJson from "../app-meta.json";
 
 declare const __HF_DESIGN_INSPECTOR__: boolean;
 
-const SITE_URL = "https://ponton-piers.ru";
+const SITE_URL = "https://new.ponton-piers.ru";
 const DEFAULT_TITLE = "Понтон Пирс";
 const DEFAULT_DESCRIPTION =
   "Понтоны, пирсы и плавучие конструкции на заказ. Проектирование, производство, доставка и монтаж по России.";
