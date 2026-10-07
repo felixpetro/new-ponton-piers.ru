@@ -14,6 +14,18 @@ const descriptions: Record<string, string> = {
     "Диагностика, регулировка, ремонт и сезонное обслуживание пирсов.",
 };
 
+const constructionLinks = [
+  ["/pirsy-prichaly", "пирсов и причалов"],
+  ["/plavuchie-garazhi-ellingi", "плавучих гаражей и эллингов"],
+  ["/pontony-dlya-hausbota", "понтонов для хаусботов"],
+  ["/pontony-dlya-bani", "понтонов для бань"],
+  ["/pontony-dlya-besedki", "понтонов для беседок"],
+  ["/pontony-dlya-sceny", "понтонов для сцен"],
+  ["/pontony-dlya-katerov", "понтонов для катеров"],
+  ["/pontony-dlya-restorana", "понтонов для ресторанов"],
+  ["/pontony-dlya-sadkov", "понтонов для рыбоводческих садков"],
+] as const;
+
 function Page() {
   return (
     <SimplePage
@@ -28,6 +40,21 @@ function Page() {
               <span>{title}</span>
               <p>{descriptions[href]}</p>
               <b>Подробнее ↗</b>
+            </a>
+          ))}
+        </div>
+      </ServiceSection>
+
+      <ServiceSection eyebrow="Конструкции" title="Для каких объектов оказываем услуги">
+        <p>
+          Оформление, согласование и сопровождение можно связать с конкретной задачей —
+          от частного пирса до коммерческого объекта на воде.
+        </p>
+        <div className="service-cards">
+          {constructionLinks.map(([href, label]) => (
+            <a className="service-card" href={href} key={href}>
+              <span>{label}</span>
+              <b>Посмотреть решение ↗</b>
             </a>
           ))}
         </div>

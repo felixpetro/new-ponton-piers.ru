@@ -6,13 +6,13 @@ export const Route = createFileRoute("/proekty")({
 });
 
 const projects = [
-  ["piers-ponton", "Пирс и причал", "Плавучая платформа для доступа к воде, швартовки и отдыха."],
-  ["naves-ponton", "Плавучий гараж", "Платформа для хранения лодки или катера с учётом рабочей нагрузки."],
-  ["dom-ponton", "Платформа для хаусбота", "Основание для плавучего дома с расчётом плавучести и крепления."],
-  ["rest-ponton", "Платформа ресторана", "Коммерческая площадка на воде для ресторана, кафе или летней зоны."],
-  ["scena-ponton", "Плавучая сцена", "Платформа для мероприятий и выступлений с расчётом эксплуатационной нагрузки."],
-  ["doc-ponton", "Док для катеров", "Причальная платформа для стоянки и обслуживания катеров и лодок."],
-];
+  ["/pirsy-prichaly", "piers-ponton", "Пирс и причал", "Плавучая платформа для доступа к воде, швартовки и отдыха."],
+  ["/plavuchie-garazhi-ellingi", "naves-ponton", "Плавучий гараж", "Платформа для хранения лодки или катера с учётом рабочей нагрузки."],
+  ["/pontony-dlya-hausbota", "dom-ponton", "Платформа для хаусбота", "Основание для плавучего дома с расчётом плавучести и крепления."],
+  ["/pontony-dlya-restorana", "rest-ponton", "Платформа ресторана", "Коммерческая площадка на воде для ресторана, кафе или летней зоны."],
+  ["/pontony-dlya-sceny", "scena-ponton", "Плавучая сцена", "Платформа для мероприятий и выступлений с расчётом эксплуатационной нагрузки."],
+  ["/pontony-dlya-katerov", "doc-ponton", "Док для катеров", "Причальная платформа для стоянки и обслуживания катеров и лодок."],
+] as const;
 
 function Page() {
   return (
@@ -28,8 +28,8 @@ function Page() {
         </section>
 
         <div className="case-grid">
-          {projects.map(([img, title, text]) => (
-            <a className="case-card" href="/kalkulyator" key={title}>
+          {projects.map(([href, img, title, text]) => (
+            <a className="case-card" href={href} key={title}>
               <img
                 src={`https://ponton-piers.ru/assets/cache_image/images/${img}_760x400_898.png`}
                 alt={title}
@@ -37,7 +37,7 @@ function Page() {
               <span>Реализованный объект</span>
               <h2>{title}</h2>
               <p>{text}</p>
-              <b>Обсудить похожую задачу →</b>
+              <b>Посмотреть решение →</b>
             </a>
           ))}
         </div>
