@@ -27,6 +27,12 @@ jobs:
             mkdir -p "$APP"
             cd "$APP"
 
+            echo "=== Remember dependency state ==="
+            OLD_DEPS_HASH=""
+            if [ -f "$APP/package.json" ] && [ -f "$APP/bun.lock" ]; then
+              OLD_DEPS_HASH=$(sha256sum "$APP/package.json" "$APP/bun.lock" | sha256sum | cut -d' ' -f1)
+            fi
+
             echo "=== Download source ==="
             TMP=$(mktemp -d)
             trap 'rm -rf "$TMP"' EXIT
@@ -35,11 +41,17 @@ jobs:
             SRC=$(find "$TMP" -mindepth 1 -maxdepth 1 -type d | head -n 1)
 
             echo "=== Sync application ==="
-            # Keep server-managed files (.git, .github and web-server config) untouched.
+            # Preserve server-managed files and the existing node_modules cache.
             cp -a "$SRC/app"/. "$APP"/
 
-            echo "=== Install dependencies ==="
-            /usr/local/bin/bun install --frozen-lockfile
+            echo "=== Check dependencies ==="
+            NEW_DEPS_HASH=$(sha256sum "$APP/package.json" "$APP/bun.lock" | sha256sum | cut -d' ' -f1)
+            if [ ! -d "$APP/node_modules" ] || [ "$OLD_DEPS_HASH" != "$NEW_DEPS_HASH" ]; then
+              echo "=== Install dependencies ==="
+              /usr/local/bin/bun install --frozen-lockfile
+            else
+              echo "=== Dependencies unchanged; skip install ==="
+            fi
 
             echo "=== Build ==="
             /usr/local/bin/bun run build
