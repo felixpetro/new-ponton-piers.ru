@@ -599,9 +599,14 @@ main:has(.journey-wrap) .projects-section > .center-link{
 .service-list li{padding:13px 0;border-bottom:1px solid var(--pp-line);font-weight:600}
 .service-list li::before{content:"→";margin-right:10px;color:var(--pp-blue)}
 .service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.service-options>div,.service-card{border:1px solid var(--pp-line);padding:25px;background:#fff}
-.service-options h3{margin:0 0 10px;font-size:20px}
-.service-options p{margin:0;color:var(--pp-muted);line-height:1.7}
+.service-options>div,.service-card{border:1px solid var(--pp-line);padding:28px;background:#fff}
+.service-options>div{position:relative;overflow:hidden}
+.service-options>div::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--pp-blue)}
+.service-options h3{margin:0 0 20px;font-size:20px;line-height:1.2}
+.service-options p{position:relative;margin:0;padding:13px 0 13px 28px;color:var(--pp-muted);line-height:1.5;border-top:1px solid var(--pp-line)}
+.service-options p::before{content:"";position:absolute;left:0;top:21px;width:8px;height:8px;border:2px solid var(--pp-blue);border-radius:50%;box-sizing:border-box}
+.service-options p:first-of-type{border-top:0;padding-top:0}
+.service-options p:first-of-type::before{top:8px}
 .service-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .service-card{display:flex;flex-direction:column;min-height:190px;transition:transform .2s ease,border-color .2s ease}
 .service-card:hover{transform:translateY(-3px);border-color:var(--pp-blue)}
