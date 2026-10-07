@@ -15,12 +15,13 @@ const navItems=[['Конструкции','/plavuchie-konstrukcii'],['Проек
 export const serviceItems=[['Регистрация плавучих конструкций','/registraciya-plavuchih-konstrukcii'],['Договор водопользования','/dogovor-vodopolzovaniya'],['Техническое обслуживание пирсов','/texnicheskoe-obsluzhivanie-pirsov']] as const;
 export function Header(){
   const [open,setOpen]=useState(false);
-  const close=()=>setOpen(false);
+  const [servicesOpen,setServicesOpen]=useState(false);
+  const close=()=>{setOpen(false);setServicesOpen(false)};
   return <header className={`site-header${open?' menu-open':''}`}>
     <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
     <nav className="desktop-nav">
-      {navItems.map(([label,href])=>label==='Услуги' ? <div className="nav-dropdown" key={href}>
-        <a href={href} className="nav-dropdown-trigger">Услуги <span>⌄</span></a>
+      {navItems.map(([label,href])=>label==='Услуги' ? <div className={`nav-dropdown${servicesOpen?' is-open':''}`} key={href}>
+        <button type="button" className="nav-dropdown-trigger" aria-expanded={servicesOpen} onClick={()=>setServicesOpen(v=>!v)}>Услуги <span>⌄</span></button>
         <div className="nav-dropdown-menu">
           {serviceItems.map(([serviceLabel,serviceHref])=><a key={serviceHref} href={serviceHref}>{serviceLabel}</a>)}
         </div>
