@@ -33,9 +33,9 @@ jobs:
             /usr/local/bin/bun run build
 
             echo "=== Restart application ==="
-            sudo systemctl restart new-ponton-piers.service
+            sudo -n systemctl restart new-ponton-piers.service
 
             echo "=== Check application ==="
-            sudo systemctl is-active --quiet new-ponton-piers.service
+            sudo -n systemctl is-active --quiet new-ponton-piers.service
 
             echo "=== Deployment successful ==="
