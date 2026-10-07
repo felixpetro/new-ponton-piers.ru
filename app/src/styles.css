@@ -622,3 +622,5 @@ main:has(.journey-wrap) .projects-section > .center-link{
   .service-list,.service-options{grid-template-columns:1fr}
   .service-card{min-height:0}
 }
+
+.certificates-section{width:min(var(--pp-container),calc(100% - 48px));margin:0 auto 100px}.certificates-head{margin-bottom:38px}.certificates-head h2{font-size:clamp(32px,4vw,48px);line-height:1.15;letter-spacing:-.045em;font-weight:700;margin:12px 0 0;max-width:760px}.certificates-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:start}.certificates-grid img{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--pp-line);padding:10px;box-sizing:border-box}@media(max-width:760px){.certificates-section{width:calc(100% - 36px);margin-bottom:70px}.certificates-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}@media(max-width:480px){.certificates-grid{grid-template-columns:1fr 1fr;gap:10px}.certificates-grid img{padding:6px}}
