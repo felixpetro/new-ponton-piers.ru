@@ -370,7 +370,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: ({ match }) => buildHead(appMeta, match.pathname),
+  head: ({ match, matches }) => {\n    const pathname = matches.at(-1)?.pathname ?? match.pathname;\n    return buildHead(appMeta, pathname);\n  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
