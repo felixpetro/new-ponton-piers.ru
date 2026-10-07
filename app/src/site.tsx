@@ -30,7 +30,7 @@ export function Header(){
     <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
     <nav className="desktop-nav">
       {navItems.map(([label,href])=>label==='Услуги' ? <div className={`nav-dropdown${servicesOpen?' is-open':''}`} key={href}>
-        <button type="button" className="nav-dropdown-trigger" aria-expanded={servicesOpen} onClick={()=>setServicesOpen(v=>!v)}>Услуги <span>⌄</span></button>
+        <a href="/uslugi" className="nav-dropdown-trigger" aria-expanded={servicesOpen} onClick={(event)=>{event.preventDefault();setServicesOpen(v=>!v)}}>УСЛУГИ <span>⌄</span></a>
         <div className="nav-dropdown-menu">
           {serviceItems.map(([serviceLabel,serviceHref])=><a key={serviceHref} href={serviceHref}>{serviceLabel}</a>)}
         </div>
