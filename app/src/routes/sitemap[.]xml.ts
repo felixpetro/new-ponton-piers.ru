@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+const SITE_URL = "https://new.ponton-piers.ru";
+
 const INDEXABLE_URLS = [
   ["/", "1.0"],
   ["/plavuchie-konstrukcii", "0.9"],
@@ -29,17 +31,13 @@ const INDEXABLE_URLS = [
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        const origin = new URL(request.url).origin;
-        const today = new Date().toISOString().split("T")[0];
+      GET: async () => {
         const xml = [
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
           ...INDEXABLE_URLS.flatMap(([path, priority]) => [
             "  <url>",
-            `    <loc>${origin}${path}</loc>`,
-            `    <lastmod>${today}</lastmod>`,
-            "    <changefreq>weekly</changefreq>",
+            `    <loc>${SITE_URL}${path}</loc>`,
             `    <priority>${priority}</priority>`,
             "  </url>",
           ]),
