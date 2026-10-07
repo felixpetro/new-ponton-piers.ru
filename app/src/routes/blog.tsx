@@ -1,1 +1,43 @@
-import {createFileRoute} from '@tanstack/react-router'; import {Shell,CTA} from '@/site'; export const Route=createFileRoute('/blog')({component:Page}); const articles=['Как выбрать понтон под нужную нагрузку','ПНД-модули или металлическая конструкция: что важно знать','Как подготовить место для установки пирса','Понтонный док для катера: основные параметры']; function Page(){return <Shell><main className="inner-page"><section className="page-intro"><span className="eyebrow">База знаний</span><h1>Статьи о понтонах и плавучих конструкциях</h1><p>Разбираем выбор конструкции, расчёт плавучести, материалы, крепление и эксплуатацию.</p></section><div className="article-list">{articles.map((x,i)=><article key={x}><span>0{i+1} · Практика</span><h2>{x}</h2><p>Коротко о параметрах, которые стоит определить до начала проектирования и расчёта.</p><a href="/kalkulyator">Обсудить задачу →</a></article>)}</div><CTA/></main></Shell>}
+import { createFileRoute } from "@tanstack/react-router";
+import { Shell, CTA } from "@/site";
+
+export const Route = createFileRoute("/blog")({
+  component: Page,
+});
+
+const articles = [
+  ["Как выбрать понтон под нужную нагрузку", "Перед расчётом важно определить постоянную и временную нагрузку, размеры платформы, оборудование и сценарий использования."],
+  ["ПНД-модули или металлическая конструкция: что важно знать", "Сравниваем варианты по назначению, жёсткости, плавучести, долговечности, обслуживанию и требованиям конкретного объекта."],
+  ["Как подготовить место для установки пирса", "Разбираем, какие данные нужны по берегу, глубине, уровню воды, доступу к объекту и системе крепления."],
+  ["Понтонный док для катера: основные параметры", "Рассказываем, что учитывать при выборе размеров дока, расчёте нагрузки, швартовке и безопасной эксплуатации."],
+];
+
+function Page() {
+  return (
+    <Shell>
+      <main className="inner-page">
+        <section className="page-intro">
+          <span className="eyebrow">База знаний</span>
+          <h1>Статьи о понтонах и плавучих конструкциях</h1>
+          <p>
+            Практические материалы о выборе понтонов, расчёте плавучести, материалах,
+            креплении, монтаже и эксплуатации конструкций на воде.
+          </p>
+        </section>
+
+        <div className="article-list">
+          {articles.map(([title, text], i) => (
+            <article key={title}>
+              <span>0{i + 1} · Практика</span>
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <a href="/kalkulyator">Обсудить задачу →</a>
+            </article>
+          ))}
+        </div>
+
+        <CTA />
+      </main>
+    </Shell>
+  );
+}

@@ -1,1 +1,62 @@
-import {createFileRoute} from '@tanstack/react-router'; import {Shell,CTA} from '@/site'; export const Route=createFileRoute('/proekty')({component:Page}); function Page(){return <Shell><main className="inner-page"><section className="page-intro"><span className="eyebrow">Реализованные проекты</span><h1>Проекты понтонов и плавучих конструкций</h1><p>Решения для частных заказчиков, бизнеса и инфраструктуры на воде.</p></section><div className="case-grid">{[['piers-ponton','Пирс и причал'],['naves-ponton','Плавучий гараж'],['dom-ponton','Платформа для хаусбота'],['rest-ponton','Платформа ресторана'],['scena-ponton','Плавучая сцена'],['doc-ponton','Док для катеров']].map(([img,t])=><a className="case-card" href="/kalkulyator" key={t}><img src={`https://ponton-piers.ru/assets/cache_image/images/${img}_760x400_898.png`} alt={t}/><span>Реализованный объект</span><h2>{t}</h2><b>Обсудить похожую задачу →</b></a>)}</div><CTA title="Нужен похожий объект?" text="Отправьте размеры и фотографии места. Рассчитаем конструкцию под ваши условия."/></main></Shell>}
+import { createFileRoute } from "@tanstack/react-router";
+import { Shell, CTA } from "@/site";
+
+export const Route = createFileRoute("/proekty")({
+  component: Page,
+});
+
+const projects = [
+  ["piers-ponton", "Пирс и причал", "Плавучая платформа для доступа к воде, швартовки и отдыха."],
+  ["naves-ponton", "Плавучий гараж", "Платформа для хранения лодки или катера с учётом рабочей нагрузки."],
+  ["dom-ponton", "Платформа для хаусбота", "Основание для плавучего дома с расчётом плавучести и крепления."],
+  ["rest-ponton", "Платформа ресторана", "Коммерческая площадка на воде для ресторана, кафе или летней зоны."],
+  ["scena-ponton", "Плавучая сцена", "Платформа для мероприятий и выступлений с расчётом эксплуатационной нагрузки."],
+  ["doc-ponton", "Док для катеров", "Причальная платформа для стоянки и обслуживания катеров и лодок."],
+];
+
+function Page() {
+  return (
+    <Shell>
+      <main className="inner-page">
+        <section className="page-intro">
+          <span className="eyebrow">Реализованные проекты</span>
+          <h1>Проекты понтонов и плавучих конструкций</h1>
+          <p>
+            Решения для частных заказчиков, бизнеса и инфраструктуры на воде.
+            Конфигурация каждой конструкции определяется назначением, нагрузкой и условиями объекта.
+          </p>
+        </section>
+
+        <div className="case-grid">
+          {projects.map(([img, title, text]) => (
+            <a className="case-card" href="/kalkulyator" key={title}>
+              <img
+                src={`https://ponton-piers.ru/assets/cache_image/images/${img}_760x400_898.png`}
+                alt={title}
+              />
+              <span>Реализованный объект</span>
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <b>Обсудить похожую задачу →</b>
+            </a>
+          ))}
+        </div>
+
+        <section className="service-section">
+          <span className="eyebrow">Как проектируем</span>
+          <h2>Конструкция под реальные условия объекта</h2>
+          <p>
+            Перед изготовлением учитываем размеры, назначение, нагрузку, глубину и условия
+            эксплуатации, а также способ крепления и состав комплектации. Это позволяет
+            подобрать решение под конкретную акваторию, а не только под требуемую площадь.
+          </p>
+        </section>
+
+        <CTA
+          title="Нужен похожий объект?"
+          text="Отправьте размеры и фотографии места. Рассчитаем конструкцию под ваши условия."
+        />
+      </main>
+    </Shell>
+  );
+}
