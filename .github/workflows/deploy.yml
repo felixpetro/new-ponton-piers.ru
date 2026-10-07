@@ -20,7 +20,14 @@ jobs:
           script: |
             set -e
 
-            cd /var/www/www-root/data/www/new.ponton-piers.ru/app
+            REPO=/var/www/www-root/data/www/new.ponton-piers.ru
+            APP=$REPO/app
+
+            echo "=== Fix Git ownership ==="
+            sudo -n chown -R "$(id -u):$(id -g)" "$REPO/.git"
+            git config --global --add safe.directory "$REPO"
+
+            cd "$APP"
 
             echo "=== Git update ==="
             git fetch origin main
