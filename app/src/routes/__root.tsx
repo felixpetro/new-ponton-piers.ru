@@ -212,6 +212,7 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
       address: {
         "@type": "PostalAddress",
         addressLocality: "Санкт-Петербург",
+        addressRegion: "Ленинградская область",
         postalCode: "195027",
         streetAddress: "проспект Энергетиков, 10",
         addressCountry: "RU",
@@ -226,7 +227,11 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
         availableLanguage: ["ru"],
       },
       openingHours: ["Mo-Fr 09:00-18:00"],
-      areaServed: "Россия",
+      areaServed: [
+        { "@type": "City", name: "Санкт-Петербург" },
+        { "@type": "Country", name: "Россия" },
+      ],
+      priceRange: "$"
     },
     {
       "@type": "WebSite",
@@ -254,7 +259,10 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
       name: entry.service,
       serviceType: entry.service,
       provider: { "@id": `${SITE_URL}/#organization` },
-      areaServed: { "@type": "Country", name: "Россия" },
+      areaServed: [
+        { "@type": "City", name: "Санкт-Петербург" },
+        { "@type": "Country", name: "Россия" },
+      ],
       url: canonical,
     });
   }

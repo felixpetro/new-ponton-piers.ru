@@ -8,7 +8,7 @@ function Page(){
       <InnerHero
         eyebrow="О компании"
         title="О компании Понтон Пирс"
-        text="Производитель понтонов и плавучих конструкций. Работаем с частными и коммерческими задачами, где важны расчёт, надёжность и понятная реализация."
+        text="Производитель понтонов и плавучих конструкций в Санкт-Петербурге. Работаем с частными и коммерческими задачами: проектируем, изготавливаем, доставляем и монтируем конструкции по России."
       />
       <FeatureRows items={[
         ["01","Проектирование","Определяем размеры, конфигурацию, нагрузку и способ установки."],
@@ -46,10 +46,21 @@ function Page(){
           <h2>Вся выпускаемая продукция сертифицирована</h2>
         </div>
         <div className="certificates-grid">
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-9001_215x300_90b.jpeg" alt="Сертификат" />
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-14001_215x300_90b.jpeg" alt="Сертификат" />
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-45001_215x300_90b.jpeg" alt="Сертификат" />
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-idr-1_215x300_90b.jpeg" alt="Индекс деловой репутации" />
+          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-9001_215x300_90b.jpeg" alt="Сертификат ISO 9001 Понтон Пирс" />
+          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-14001_215x300_90b.jpeg" alt="Сертификат ISO 14001 Понтон Пирс" />
+          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-45001_215x300_90b.jpeg" alt="Сертификат ISO 45001 Понтон Пирс" />
+          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-idr-1_215x300_90b.jpeg" alt="Индекс деловой репутации ООО «ВУОКСА»" />
+        </div>
+      </section>
+      <section className="service-section">
+        <div className="service-section-head">
+          <span className="eyebrow">Контакты</span>
+          <h2>Производство в Санкт-Петербурге</h2>
+        </div>
+        <div className="service-section-body">
+          <p>ООО «ВУОКСА» · 195027, Санкт-Петербург, проспект Энергетиков, 10.</p>
+          <p><a href="tel:+78003501181">8 (800) 350-11-81</a> · <a href="mailto:info@ponton-piers.ru">info@ponton-piers.ru</a></p>
+          <p>Пн–Пт, 09:00–18:00. Доставка и монтаж по России.</p>
         </div>
       </section>
       <CTA/>
