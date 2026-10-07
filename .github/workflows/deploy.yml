@@ -79,8 +79,9 @@ jobs:
           set -e
           for i in 1 2 3 4 5; do
             echo "=== HTTPS check attempt $i ==="
-            curl -fsSIL --max-time 20 https://new.ponton-piers.ru/ && exit 0
-            sleep 5
+            curl -fsSIL --max-time 20 https://new.ponton-piers.ru/
+            curl -fsSIL --max-time 20 https://new.ponton-piers.ru/pontony-dlya-hausbota
+            exit 0
           done
           echo "HTTPS health check failed"
           exit 1
