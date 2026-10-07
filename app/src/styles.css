@@ -447,3 +447,30 @@ main:has(.journey-wrap) .projects-section > .center-link{
 .site-header .site-logo-img{width:280px;height:96px;object-fit:contain}
 @media(max-width:1000px){.site-header .site-logo-img{width:260px;height:88px}}
 @media(max-width:640px){.site-header .site-logo-img{width:245px;height:78px}}
+
+/* Inner pages: the final CTA is a full-width band; only its contents follow the 1200px grid. */
+.inner-page > .cta-section{
+  width:100%;
+  max-width:none;
+  margin-left:0;
+  margin-right:0;
+  box-sizing:border-box;
+}
+.inner-page > .cta-section > div,
+.inner-page > .cta-section > a{
+  width:auto;
+}
+@media(min-width:761px){
+  .inner-page > .cta-section{
+    padding-left:max(24px,calc((100% - var(--pp-container))/2));
+    padding-right:max(24px,calc((100% - var(--pp-container))/2));
+  }
+  .inner-page > .cta-section > div:first-child{max-width:620px}
+  .inner-page > .cta-section .cta-dark{width:360px;box-sizing:border-box}
+}
+@media(max-width:760px){
+  .inner-page > .cta-section{padding-left:18px;padding-right:18px}
+  .inner-page > .cta-section > div,
+  .inner-page > .cta-section > a{width:100%}
+  .inner-page > .cta-section .cta-dark{width:max-content}
+}
