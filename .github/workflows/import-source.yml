@@ -2,24 +2,20 @@ name: Import project source
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   import-source:
-    if: ${{ !hashFiles('.source-imported') }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Download source snapshot
-        run: |
-          curl -fL --retry 3 -o /tmp/source.tar.gz 'https://d2ol7oe51mr4n9.cloudfront.net/user_3KCLVgEYP84Zth3rqECH3wNBJlP/29df9c8a-0f35-4767-819b-6b5e175568f0.gz'
+        run: curl -fL --retry 3 -o /tmp/source.tar.gz 'https://d2ol7oe51mr4n9.cloudfront.net/user_3KCLVgEYP84Zth3rqECH3wNBJlP/29df9c8a-0f35-4767-819b-6b5e175568f0.gz'
       - name: Restore project
-        run: |
-          tar -xzf /tmp/source.tar.gz -C .
-          touch .source-imported
+        run: tar -xzf /tmp/source.tar.gz -C .
       - name: Commit project
         run: |
           git config user.name "github-actions[bot]"
