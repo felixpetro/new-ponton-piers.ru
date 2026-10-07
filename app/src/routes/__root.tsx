@@ -285,7 +285,6 @@ function buildHead(meta: AppMeta, pathname: string) {
       { name: "description", content: description },
       { name: "author", content: "Понтон Пирс" },
       { name: "robots", content: entry.noindex ? "noindex, follow" : "index, follow" },
-      { name: "theme-color", content: "#111111" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: entry.type ?? "website" },
