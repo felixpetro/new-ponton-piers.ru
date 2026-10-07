@@ -161,6 +161,26 @@ const SEO: Record<string, SeoEntry> = {
     description:
       "Полезные статьи о выборе понтонов, расчёте плавучести, материалах, креплении, монтаже и эксплуатации плавучих конструкций.",
   },
+  "/blog/kak-vybrat-ponton": {
+    title: "Как выбрать понтон под нужную нагрузку | Понтон Пирс",
+    description: "Как определить нагрузку, размеры и условия эксплуатации перед расчётом понтона.",
+    type: "article",
+  },
+  "/blog/pnd-ili-metall": {
+    title: "ПНД-модули или металл: что выбрать для понтона | Понтон Пирс",
+    description: "Сравнение ПНД-модулей и металлических конструкций по назначению, жёсткости, нагрузке и обслуживанию.",
+    type: "article",
+  },
+  "/blog/podgotovka-mesta-pirs": {
+    title: "Как подготовить место для установки пирса | Понтон Пирс",
+    description: "Какие данные собрать по берегу, глубине, уровню воды, доступу и креплению до установки пирса.",
+    type: "article",
+  },
+  "/blog/dok-dlya-katera": {
+    title: "Понтонный док для катера: основные параметры | Понтон Пирс",
+    description: "Размеры, масса судна, швартовка, крепление и эксплуатация понтонного дока.",
+    type: "article",
+  },
   "/privacy": {
     title: "Политика конфиденциальности | Понтон Пирс",
     description: "Политика конфиденциальности сайта Понтон Пирс.",
@@ -248,6 +268,25 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
         { "@type": "ListItem", position: 1, name: "Главная", item: SITE_URL + "/" },
         { "@type": "ListItem", position: 2, name: entry.title.split(" | ")[0], item: canonical },
       ],
+    });
+  }
+
+  const articleMeta: Record<string, {headline:string;description:string}> = {
+    "/blog/kak-vybrat-ponton": {headline: "Как выбрать понтон под нужную нагрузку", description: "Как определить нагрузку, размеры и условия эксплуатации перед расчётом понтона."},
+    "/blog/pnd-ili-metall": {headline: "ПНД-модули или металлическая конструкция: что важно знать", description: "Сравнение ПНД-модулей и металлических конструкций по назначению, жёсткости, нагрузке и обслуживанию."},
+    "/blog/podgotovka-mesta-pirs": {headline: "Как подготовить место для установки пирса", description: "Какие данные собрать по берегу, глубине, уровню воды, доступу и креплению до установки пирса."},
+    "/blog/dok-dlya-katera": {headline: "Понтонный док для катера: основные параметры", description: "Размеры, масса судна, швартовка, крепление и эксплуатация понтонного дока."},
+  };
+  const article = articleMeta[pathname];
+  if (article) {
+    graph.push({
+      "@type": "Article",
+      headline: article.headline,
+      description: article.description,
+      mainEntityOfPage: canonical,
+      author: { "@type": "Organization", name: "Понтон Пирс" },
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      inLanguage: "ru-RU",
     });
   }
 

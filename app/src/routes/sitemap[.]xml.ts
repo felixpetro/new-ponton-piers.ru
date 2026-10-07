@@ -26,6 +26,10 @@ const INDEXABLE_URLS = [
   ["/otzyvy", "0.5"],
   ["/kalkulyator", "0.7"],
   ["/blog", "0.5"],
+  ["/blog/kak-vybrat-ponton", "0.6"],
+  ["/blog/pnd-ili-metall", "0.6"],
+  ["/blog/podgotovka-mesta-pirs", "0.6"],
+  ["/blog/dok-dlya-katera", "0.6"],
 ] as const;
 
 export const Route = createFileRoute("/sitemap.xml")({
