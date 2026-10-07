@@ -1,4 +1,3 @@
-import {createFileRoute} from "@tanstack/react-router";
 import {FeatureRows,CTA,Shell,InnerHero} from "@/site";
 
 export const Route=createFileRoute("/o-kompanii")({component:Page});
@@ -8,7 +7,7 @@ function Page(){
     <main className="inner-page">
       <InnerHero
         eyebrow="О компании"
-        title="Понтон Пирс"
+        title="О компании Понтон Пирс"
         text="Производитель понтонов и плавучих конструкций. Работаем с частными и коммерческими задачами, где важны расчёт, надёжность и понятная реализация."
       />
       <FeatureRows items={[

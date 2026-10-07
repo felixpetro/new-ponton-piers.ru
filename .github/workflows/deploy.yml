@@ -42,7 +42,6 @@ jobs:
             SRC=$(find "$TMP" -mindepth 1 -maxdepth 1 -type d | head -n 1)
 
             echo "=== Sync application ==="
-            # Preserve server-managed files and the existing node_modules cache.
             cp -a "$SRC/app"/. "$APP"/
 
             echo "=== Check dependencies ==="
@@ -55,8 +54,6 @@ jobs:
             fi
 
             echo "=== Remove stale SEO files ==="
-            # These files can shadow the TanStack server routes when an older
-            # static copy was left on the server from a previous deployment.
             rm -f "$REPO/sitemap.xml" "$REPO/robots.txt" "$APP/sitemap.xml" "$APP/robots.txt" "$APP/public/sitemap.xml" "$APP/public/robots.txt"
 
             echo "=== Build ==="
@@ -79,9 +76,11 @@ jobs:
           set -e
           for i in 1 2 3 4 5; do
             echo "=== HTTPS check attempt $i ==="
-            curl -fsSIL --max-time 20 https://new.ponton-piers.ru/
-            curl -fsSIL --max-time 20 https://new.ponton-piers.ru/pontony-dlya-hausbota
-            exit 0
+            if curl -fsSIL --max-time 20 https://new.ponton-piers.ru/ &&
+               curl -fsSIL --max-time 20 https://new.ponton-piers.ru/pontony-dlya-hausbota; then
+              exit 0
+            fi
+            sleep 5
           done
           echo "HTTPS health check failed"
           exit 1
