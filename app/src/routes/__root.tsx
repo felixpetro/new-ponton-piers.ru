@@ -21,6 +21,7 @@ const SITE_URL = "https://new.ponton-piers.ru";
 const DEFAULT_TITLE = "Понтон Пирс";
 const DEFAULT_DESCRIPTION =
   "Понтоны, пирсы и плавучие конструкции на заказ. Проектирование, производство, доставка и монтаж по России.";
+const IS_STAGING = SITE_URL.includes("new.");
 
 type SeoEntry = {
   title: string;
@@ -203,11 +204,19 @@ function toOwnAssetUrl(value: string | null | undefined): string | null {
 function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
   const graph: Record<string, unknown>[] = [
     {
-      "@type": "Organization",
+      "@type": "LocalBusiness",
       "@id": `${SITE_URL}/#organization`,
       name: "Понтон Пирс",
       url: SITE_URL,
       logo: `${SITE_URL}/favicon.svg`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Санкт-Петербург",
+        streetAddress: "проспект Энергетиков, 10",
+        addressCountry: "RU",
+      },
+      openingHours: ["Mo-Fr 09:00-18:00"],
+      areaServed: "Россия",
     },
     {
       "@type": "WebSite",
@@ -284,7 +293,7 @@ function buildHead(meta: AppMeta, pathname: string) {
       { title },
       { name: "description", content: description },
       { name: "author", content: "Понтон Пирс" },
-      { name: "robots", content: entry.noindex ? "noindex, follow" : "index, follow" },
+      { name: "robots", content: entry.noindex || IS_STAGING ? "noindex, follow" : "index, follow" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: entry.type ?? "website" },
