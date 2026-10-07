@@ -1,0 +1,3 @@
+import type {ScrollScrubScene,ScrollScrubTheme} from '@/components/scroll-scrub/scroll-scrub';
+export const scrollScrubTheme:ScrollScrubTheme={accent:'#2f80a5',background:'#0b2029',ink:'#f4f0e6',muted:'#b9c8ca'};
+export const scrollScrubScenes:ScrollScrubScene[]=[{id:'scene-01',label:'Понтон Пирс',kicker:'Проектируем под воду',title:'Конструкция начинается с расчёта.',body:'Плавучая платформа должна соответствовать реальной нагрузке, месту установки и условиям эксплуатации.',clip:'/assets/world/hero.mp4',mobileClip:'/assets/world/hero-mobile.mp4',poster:'/assets/world/hero-poster.jpg',mobilePoster:'/assets/world/hero-mobile-poster.jpg',tags:['ПНД','стальной каркас','индивидуальный проект']}];
