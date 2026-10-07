@@ -29,12 +29,7 @@ export function Header(){
   return <header className={`site-header${open?' menu-open':''}`}>
     <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
     <nav className="desktop-nav">
-      {navItems.map(([label,href])=>label==='Услуги' ? <div className={`nav-dropdown${servicesOpen?' is-open':''}`} key={href}>
-        <a href="/uslugi" className="nav-dropdown-trigger" aria-expanded={servicesOpen} onClick={(event)=>{event.preventDefault();setServicesOpen(v=>!v)}}>УСЛУГИ <span>⌄</span></a>
-        <div className="nav-dropdown-menu">
-          {serviceItems.map(([serviceLabel,serviceHref])=><a key={serviceHref} href={serviceHref}>{serviceLabel}</a>)}
-        </div>
-      </div> : <a key={href} href={href}>{label}</a>)}
+      {navItems.map(([label,href])=><a key={href} href={href}>{label}</a>)}
     </nav>
     <a className="header-cta" href="/kalkulyator">Рассчитать стоимость <span>↗</span></a>
     <button className="mobile-menu-toggle" type="button" aria-label={open?'Закрыть меню':'Открыть меню'} aria-expanded={open} onClick={()=>setOpen(v=>!v)}>
