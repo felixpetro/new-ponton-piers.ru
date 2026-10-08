@@ -31,7 +31,7 @@ function Page() {
           {projects.map(([href, img, title, text]) => (
             <a className="case-card" href={href} key={title}>
               <img
-                src={`/images/${img}.svg`}
+                src={`/images/${img}.png`}
                 alt={title}
               />
               <span>Реализованный объект</span>
