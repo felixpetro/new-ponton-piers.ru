@@ -72,7 +72,7 @@ jobs:
             rm -f "$REPO/sitemap.xml" "$REPO/robots.txt" "$APP/sitemap.xml" "$APP/robots.txt" "$APP/public/sitemap.xml" "$APP/public/robots.txt"
 
             echo "=== Remove previous build ==="
-            sudo -n rm -rf "$APP/.output"
+            rm -rf "$APP/.output"
 
             echo "=== Build ==="
             /usr/local/bin/bun run build
