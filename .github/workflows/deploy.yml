@@ -50,7 +50,8 @@ jobs:
             curl -fsSL "https://felixpetro.github.io/ponton-piers.ru/images/pontoon-background.png" -o "$APP/public/images/pontoon-background.png"
 
             for image in piers-ponton naves-ponton dom-ponton bani-ponton besedka-ponton scena-ponton doc-ponton rest-ponton; do
-              curl -fsSL "https://ponton-piers.ru/assets/cache_image/images/${image}_760x400_898.png" -o "$APP/public/images/${image}.png"
+              curl -fsSL "https://ponton-piers.ru/assets/cache_image/images/${image}_760x400_898.png" -o "$APP/public/images/${image}_760x400_898.png"
+              cp "$APP/public/images/${image}_760x400_898.png" "$APP/public/images/${image}.png"
             done
 
             curl -fsSL "https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-9001_215x300_90b.jpeg" -o "$APP/public/images/sert-9001.jpeg"
