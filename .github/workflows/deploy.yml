@@ -44,6 +44,20 @@ jobs:
             echo "=== Sync application ==="
             cp -a "$SRC/app"/. "$APP"/
 
+            echo "=== Download local image assets ==="
+            mkdir -p "$APP/public/images"
+            curl -fsSL "https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" -o "$APP/public/images/logo.svg"
+            curl -fsSL "https://felixpetro.github.io/ponton-piers.ru/images/pontoon-background.png" -o "$APP/public/images/pontoon-background.png"
+
+            for image in piers-ponton naves-ponton dom-ponton bani-ponton besedka-ponton scena-ponton doc-ponton rest-ponton; do
+              curl -fsSL "https://ponton-piers.ru/assets/cache_image/images/$function () { [native code] }_760x400_898.png" -o "$APP/public/images/$function () { [native code] }.png"
+            done
+
+            curl -fsSL "https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-9001_215x300_90b.jpeg" -o "$APP/public/images/sert-9001.jpeg"
+            curl -fsSL "https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-14001_215x300_90b.jpeg" -o "$APP/public/images/sert-14001.jpeg"
+            curl -fsSL "https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-45001_215x300_90b.jpeg" -o "$APP/public/images/sert-45001.jpeg"
+            curl -fsSL "https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-idr-1_215x300_90b.jpeg" -o "$APP/public/images/sert-idr-1.jpeg"
+
             echo "=== Check dependencies ==="
             NEW_DEPS_HASH=$(sha256sum "$APP/package.json" "$APP/bun.lock" | sha256sum | cut -d' ' -f1)
             if [ ! -d "$APP/node_modules" ] || [ "$OLD_DEPS_HASH" != "$NEW_DEPS_HASH" ]; then
