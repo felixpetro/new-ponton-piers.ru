@@ -10,7 +10,7 @@ export const directions=[
 ['Понтоны для катеров','/pontony-dlya-katerov','Доковые и причальные решения для техники.','doc-ponton'],
 ['Понтоны для ресторанов','/pontony-dlya-restorana','Платформы для ресторанов и объектов на воде.','rest-ponton'],
 ['Понтоны для садков','/pontony-dlya-sadkov','Плавучие конструкции для рыбоводческих хозяйств.','piers-ponton']] as const;
-const img=(name:string)=>`https://ponton-piers.ru/assets/cache_image/images/${name}_760x400_898.png`;
+const img=(name:string)=>`/images/${name}_760x400_898.png`;
 const navItems=[['Конструкции','/plavuchie-konstrukcii'],['Проекты','/proekty'],['Услуги','/uslugi'],['Производство','/proizvodstvo'],['О компании','/o-kompanii'],['Контакты','/kontakty']] as const;
 export const serviceItems=[['Регистрация плавучих конструкций','/registraciya-plavuchih-konstrukcii'],['Договор водопользования','/dogovor-vodopolzovaniya'],['Техническое обслуживание пирсов','/texnicheskoe-obsluzhivanie-pirsov']] as const;
 export function Header(){
@@ -27,7 +27,7 @@ export function Header(){
     return()=>document.removeEventListener('mousedown',handleOutside);
   },[servicesOpen]);
   return <header className={`site-header${open?' menu-open':''}`}>
-    <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></Link>
+    <Link to="/" className="brand" onClick={close}><img className="site-logo-img" src="/images/logo.svg" alt="Понтон Пирс" /></Link>
     <nav className="desktop-nav">
       {navItems.map(([label,href])=><a key={href} href={href}>{label}</a>)}
     </nav>
@@ -46,7 +46,7 @@ export function Header(){
     </nav>}
   </header>
 }
-export function Footer(){return <footer className="footer"><div className="footer-top"><div><div className="brand footer-brand"><img className="site-logo-img footer-logo-img" src="https://felixpetro.github.io/ponton-piers.ru/images/logo.svg" alt="Понтон Пирс" /></div><p>Проектируем и производим понтоны, пирсы и плавучие конструкции по индивидуальным задачам.</p></div><div><strong>Конструкции</strong>{directions.slice(0,5).map(d=><a key={d[1]} href={d[1]}>{d[0]}</a>)}</div><div><strong>Компания</strong><a href="/proekty">Проекты</a><a href="/uslugi">Услуги</a><a href="/proizvodstvo">Производство</a><a href="/o-kompanii">О компании</a><a href="/otzyvy">Отзывы</a></div><div><strong>Связь</strong><a href="/kontakty">Контакты</a><a href="/kalkulyator">Рассчитать стоимость</a><a href="/faq">FAQ</a><a href="tel:+78003501181">8 (800) 350-11-81</a><a href="mailto:info@ponton-piers.ru">info@ponton-piers.ru</a><span>Санкт-Петербург, проспект Энергетиков, 10</span><span>Пн–Пт, 09:00–18:00</span></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Понтон Пирс · ООО «ВУОКСА»</span><span>Санкт-Петербург · проспект Энергетиков, 10 · Доставка и монтаж по России</span><a href="/privacy">Политика конфиденциальности</a></div></footer>}
+export function Footer(){return <footer className="footer"><div className="footer-top"><div><div className="brand footer-brand"><img className="site-logo-img footer-logo-img" src="/images/logo.svg" alt="Понтон Пирс" /></div><p>Проектируем и производим понтоны, пирсы и плавучие конструкции по индивидуальным задачам.</p></div><div><strong>Конструкции</strong>{directions.slice(0,5).map(d=><a key={d[1]} href={d[1]}>{d[0]}</a>)}</div><div><strong>Компания</strong><a href="/proekty">Проекты</a><a href="/uslugi">Услуги</a><a href="/proizvodstvo">Производство</a><a href="/o-kompanii">О компании</a><a href="/otzyvy">Отзывы</a></div><div><strong>Связь</strong><a href="/kontakty">Контакты</a><a href="/kalkulyator">Рассчитать стоимость</a><a href="/faq">FAQ</a><a href="tel:+78003501181">8 (800) 350-11-81</a><a href="mailto:info@ponton-piers.ru">info@ponton-piers.ru</a><span>Санкт-Петербург, проспект Энергетиков, 10</span><span>Пн–Пт, 09:00–18:00</span></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Понтон Пирс · ООО «ВУОКСА»</span><span>Санкт-Петербург · проспект Энергетиков, 10 · Доставка и монтаж по России</span><a href="/privacy">Политика конфиденциальности</a></div></footer>}
 export function Shell({children}:{children:ReactNode}){return <><Header/>{children}<Footer/></>}
 export function DirectionGrid(){return <section className="section direction-section" id="directions"><div className="section-head"><span className="eyebrow">09 направлений</span><h2>Плавучие конструкции<br/>для любых задач</h2><p>От частного пирса до сложного коммерческого объекта. Подбираем конструкцию под нагрузку, размеры и условия эксплуатации.</p></div><div className="direction-grid">{directions.map((d,i)=><a className="direction-card" href={d[1]} key={d[1]}><img src={img(d[3])} alt={d[0]}/><div className="direction-copy"><span>0{i+1}</span><h3>{d[0]}</h3><p>{d[2]}</p><b>Смотреть решение ↗</b></div></a>)}</div></section>}
 export function CTA({title='Обсудим ваш проект',text='Опишите задачу, приложите размеры или фотографию места. Мы предложим конструкцию и подготовим расчёт.'}:{title?:string;text?:string}){return <section className="cta-section"><div><span className="eyebrow">Начнём с задачи</span><h2>{title}</h2><p>{text}</p></div><a className="cta-dark" href="/kalkulyator">Получить расчёт <span>→</span></a></section>}
