@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { FeatureRows, CTA, Shell, InnerHero } from "@/site";
 
 export const Route = createFileRoute("/o-kompanii")({ component: Page });
