@@ -43,6 +43,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             "  <url>",
             `    <loc>${SITE_URL}${path}</loc>`,
             `    <priority>${priority}</priority>`,
+            `    <lastmod>2026-10-08</lastmod>`,
             "  </url>",
           ]),
           "</urlset>",

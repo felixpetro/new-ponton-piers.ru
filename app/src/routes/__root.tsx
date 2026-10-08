@@ -203,6 +203,7 @@ type AppMeta = {
 };
 
 const appMeta = appMetaJson as AppMeta;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/world/hero-poster.jpg`;
 const APP_HOST_ZONES = ["higgsfield.app", "higgsfield-dev.app"];
 
 function toOwnAssetUrl(value: string | null | undefined): string | null {
@@ -258,6 +259,7 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
       url: SITE_URL,
       inLanguage: "ru-RU",
       publisher: { "@id": `${SITE_URL}/#organization` },
+      image: [`${SITE_URL}/assets/world/hero-poster.jpg`],
     },
   ];
 
@@ -349,7 +351,7 @@ function buildHead(meta: AppMeta, pathname: string) {
     if (value.startsWith("/")) return SITE_URL + value;
     return value;
   };
-  const ogImage = assetUrl(meta.og_image_url);
+  const ogImage = assetUrl(meta.og_image_url) ?? DEFAULT_OG_IMAGE;
   const favicon = toOwnAssetUrl(meta.favicon_url);
   const ogVideo = assetUrl(meta.og_video_url);
 

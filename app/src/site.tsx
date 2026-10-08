@@ -10,7 +10,7 @@ export const directions=[
 ['Понтоны для катеров','/pontony-dlya-katerov','Доковые и причальные решения для техники.','doc-ponton'],
 ['Понтоны для ресторанов','/pontony-dlya-restorana','Платформы для ресторанов и объектов на воде.','rest-ponton'],
 ['Понтоны для садков','/pontony-dlya-sadkov','Плавучие конструкции для рыбоводческих хозяйств.','piers-ponton']] as const;
-const img=(name:string)=>`/images/${name}_760x400_898.png`;
+const img=(name:string)=>`/images/${name}.svg`;
 const navItems=[['Конструкции','/plavuchie-konstrukcii'],['Проекты','/proekty'],['Услуги','/uslugi'],['Производство','/proizvodstvo'],['О компании','/o-kompanii'],['Контакты','/kontakty']] as const;
 export const serviceItems=[['Регистрация плавучих конструкций','/registraciya-plavuchih-konstrukcii'],['Договор водопользования','/dogovor-vodopolzovaniya'],['Техническое обслуживание пирсов','/texnicheskoe-obsluzhivanie-pirsov']] as const;
 export function Header(){

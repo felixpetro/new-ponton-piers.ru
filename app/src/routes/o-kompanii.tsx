@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import {FeatureRows,CTA,Shell,InnerHero} from "@/site";
 
 export const Route=createFileRoute("/o-kompanii")({component:Page});
@@ -46,10 +47,10 @@ function Page(){
           <h2>Вся выпускаемая продукция сертифицирована</h2>
         </div>
         <div className="certificates-grid">
-          <img src="/images/sert-9001.jpeg" alt="Сертификат ISO 9001 Понтон Пирс" />
-          <img src="/images/sert-14001.jpeg" alt="Сертификат ISO 14001 Понтон Пирс" />
-          <img src="/images/sert-45001.jpeg" alt="Сертификат ISO 45001 Понтон Пирс" />
-          <img src="/images/sert-idr-1.jpeg" alt="Индекс деловой репутации ООО «ВУОКСА»" />
+          <article className="certificate-card"><strong>ISO 9001</strong><span>Система менеджмента качества</span></article>
+          <article className="certificate-card"><strong>ISO 14001</strong><span>Система экологического менеджмента</span></article>
+          <article className="certificate-card"><strong>ISO 45001</strong><span>Система менеджмента охраны труда</span></article>
+          <article className="certificate-card"><strong>Индекс деловой репутации</strong><span>ООО «ВУОКСА»</span></article>
         </div>
       </section>
       <section className="service-section">
