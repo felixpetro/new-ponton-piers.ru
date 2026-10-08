@@ -31,7 +31,7 @@ function Page() {
           {projects.map(([href, img, title, text]) => (
             <a className="case-card" href={href} key={title}>
               <img
-                src={`https://ponton-piers.ru/assets/cache_image/images/${img}_760x400_898.png`}
+                src={`/images/${img}.png`}
                 alt={title}
               />
               <span>Реализованный объект</span>
