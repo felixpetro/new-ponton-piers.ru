@@ -46,10 +46,10 @@ function Page(){
           <h2>Вся выпускаемая продукция сертифицирована</h2>
         </div>
         <div className="certificates-grid">
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-9001_215x300_90b.jpeg" alt="Сертификат ISO 9001 Понтон Пирс" />
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-14001_215x300_90b.jpeg" alt="Сертификат ISO 14001 Понтон Пирс" />
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-45001_215x300_90b.jpeg" alt="Сертификат ISO 45001 Понтон Пирс" />
-          <img src="https://ponton-piers.ru/assets/cache_image/assets/avto/img/sertificate/sert-idr-1_215x300_90b.jpeg" alt="Индекс деловой репутации ООО «ВУОКСА»" />
+          <img src="/images/sert-9001.jpeg" alt="Сертификат ISO 9001 Понтон Пирс" />
+          <img src="/images/sert-14001.jpeg" alt="Сертификат ISO 14001 Понтон Пирс" />
+          <img src="/images/sert-45001.jpeg" alt="Сертификат ISO 45001 Понтон Пирс" />
+          <img src="/images/sert-idr-1.jpeg" alt="Индекс деловой репутации ООО «ВУОКСА»" />
         </div>
       </section>
       <section className="service-section">
