@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Deploy to server
@@ -87,7 +87,7 @@ jobs:
 
   healthcheck:
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check published SEO content over HTTPS
         run: |
@@ -107,7 +107,7 @@ jobs:
           for i in 1 2 3 4 5; do
             echo "=== Content check attempt $i ==="
             if check_page "https://new.ponton-piers.ru/o-kompanii" "Решения для частных и коммерческих объектов" &&
-               check_page "https://new.ponton-piers.ru/proizvodstvo" "Как проходит изготовление понтона" &&
+               check_page "https://new.ponton-piers.ru/proizvodstvo" "Как организовано изготовление" &&
                check_page "https://new.ponton-piers.ru/registraciya-plavuchih-konstrukcii" "Сначала определяем статус объекта" &&
                check_page "https://new.ponton-piers.ru/dogovor-vodopolzovaniya" "От чего зависит порядок водопользования" &&
                check_page "https://new.ponton-piers.ru/texnicheskoe-obsluzhivanie-pirsov" "Обслуживание по фактическому состоянию"; then
