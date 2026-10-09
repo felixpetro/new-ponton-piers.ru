@@ -89,16 +89,31 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Check staging site over HTTPS
+      - name: Check published SEO content over HTTPS
         run: |
-          set -e
+          set -euo pipefail
+          check_page() {
+            url="$1"
+            expected="$2"
+            echo "=== Checking $url ==="
+            html="$(curl -fsSL --max-time 30 "$url")"
+            if ! printf '%s' "$html" | grep -Fq "$expected"; then
+              echo "Expected text not found: $expected"
+              exit 1
+            fi
+            echo "Found expected text: $expected"
+          }
+
           for i in 1 2 3 4 5; do
-            echo "=== HTTPS check attempt $i ==="
-            if curl -fsSIL --max-time 20 https://new.ponton-piers.ru/ &&
-               curl -fsSIL --max-time 20 https://new.ponton-piers.ru/pontony-dlya-hausbota; then
+            echo "=== Content check attempt $i ==="
+            if check_page "https://new.ponton-piers.ru/o-kompanii" "Решения для частных и коммерческих объектов" &&
+               check_page "https://new.ponton-piers.ru/proizvodstvo" "Как проходит изготовление понтона" &&
+               check_page "https://new.ponton-piers.ru/registraciya-plavuchih-konstrukcii" "Сначала определяем статус объекта" &&
+               check_page "https://new.ponton-piers.ru/dogovor-vodopolzovaniya" "От чего зависит порядок водопользования" &&
+               check_page "https://new.ponton-piers.ru/texnicheskoe-obsluzhivanie-pirsov" "Обслуживание по фактическому состоянию"; then
               exit 0
             fi
             sleep 5
           done
-          echo "HTTPS health check failed"
+          echo "Published SEO content health check failed"
           exit 1
