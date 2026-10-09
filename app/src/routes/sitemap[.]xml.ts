@@ -19,7 +19,6 @@ const INDEXABLE_URLS = [
   ["/dogovor-vodopolzovaniya", "0.7"],
   ["/texnicheskoe-obsluzhivanie-pirsov", "0.7"],
   ["/proizvodstvo", "0.7"],
-  ["/proekty", "0.7"],
   ["/o-kompanii", "0.6"],
   ["/kontakty", "0.6"],
   ["/faq", "0.6"],
