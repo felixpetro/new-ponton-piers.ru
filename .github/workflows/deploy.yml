@@ -109,7 +109,7 @@ jobs:
             if check_page "https://new.ponton-piers.ru/o-kompanii" "Решения для частных и коммерческих объектов" &&
                check_page "https://new.ponton-piers.ru/proizvodstvo" "Как организовано изготовление" &&
                check_page "https://new.ponton-piers.ru/registraciya-plavuchih-konstrukcii" "Сначала определяем статус объекта" &&
-               check_page "https://new.ponton-piers.ru/dogovor-vodopolzovaniya" "От чего зависит порядок водопользования" &&
+               check_page "https://new.ponton-piers.ru/dogovor-vodopolzovaniya" "Сначала определяем подходящий порядок" &&
                check_page "https://new.ponton-piers.ru/texnicheskoe-obsluzhivanie-pirsov" "Обслуживание по фактическому состоянию"; then
               exit 0
             fi
