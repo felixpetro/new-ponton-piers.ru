@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FeatureRows, CTA, Shell, InnerHero } from "@/site";
+import { FeatureRows, CTA, Shell, InnerHero, ServiceSection } from "@/site";
 
 export const Route = createFileRoute("/o-kompanii")({
   head: () => ({
