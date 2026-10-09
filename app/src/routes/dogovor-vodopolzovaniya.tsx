@@ -2,6 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CTA, FeatureRows, ServiceSection, Shell, InnerHero } from "@/site";
 
 export const Route = createFileRoute("/dogovor-vodopolzovaniya")({
+  head: () => ({
+    meta: [
+      { title: "Договор водопользования — оформление и сопровождение | Понтон Пирс" },
+      { name: "description", content: "Помогаем определить необходимость договора водопользования и сопровождаем оформление документов для размещения и эксплуатации плавучих объектов на водном объекте." },
+    ],
+  }),
   component: Page,
 });
 

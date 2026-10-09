@@ -2,6 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CTA, FeatureRows, ServiceSection, Shell, InnerHero } from "@/site";
 
 export const Route = createFileRoute("/registraciya-plavuchih-konstrukcii")({
+  head: () => ({
+    meta: [
+      { title: "Регистрация плавучих конструкций — помощь с документами | Понтон Пирс" },
+      { name: "description", content: "Поможем определить, требуется ли регистрация плавучей конструкции, подготовить документы и пройти предусмотренную процедуру. Понтоны, пирсы и другие плавучие объекты." },
+    ],
+  }),
   component: Page,
 });
 

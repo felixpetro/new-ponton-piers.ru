@@ -1,7 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FeatureRows, CTA, Shell, InnerHero } from "@/site";
 
-export const Route = createFileRoute("/o-kompanii")({ component: Page });
+export const Route = createFileRoute("/o-kompanii")({
+  head: () => ({
+    meta: [
+      { title: "Понтон Пирс — производство и монтаж плавучих конструкций" },
+      { name: "description", content: "Проектируем, производим и устанавливаем понтоны, пирсы и плавучие конструкции. Индивидуальные решения, собственное производство и комплексное сопровождение проекта." },
+    ],
+  }),
+  component: Page,
+});
 
 function Page() {
   return (

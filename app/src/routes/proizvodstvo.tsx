@@ -1,7 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SimplePage, FeatureRows, ServiceSection } from "@/site";
 
-export const Route = createFileRoute("/proizvodstvo")({ component: Page });
+export const Route = createFileRoute("/proizvodstvo")({
+  head: () => ({
+    meta: [
+      { title: "Производство понтонов и плавучих конструкций | Понтон Пирс" },
+      { name: "description", content: "Собственное производство понтонов, пирсов и плавучих конструкций. Проектирование, изготовление, комплектация и подготовка к монтажу под задачи конкретного объекта." },
+    ],
+  }),
+  component: Page,
+});
 
 function Page() {
   return (

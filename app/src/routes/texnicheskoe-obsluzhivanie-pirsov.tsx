@@ -2,6 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CTA, FeatureRows, ServiceSection, Shell, InnerHero } from "@/site";
 
 export const Route = createFileRoute("/texnicheskoe-obsluzhivanie-pirsov")({
+  head: () => ({
+    meta: [
+      { title: "Техническое обслуживание пирсов и понтонов | Понтон Пирс" },
+      { name: "description", content: "Техническое обслуживание пирсов и понтонов: осмотр, проверка креплений и соединений, сезонная подготовка, мелкий ремонт и рекомендации по дальнейшей эксплуатации." },
+    ],
+  }),
   component: Page,
 });
 
