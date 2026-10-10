@@ -63,4 +63,32 @@ export function CommercialDetails({lead,uses,related}:{lead:string;uses:string[]
   <ServiceSection eyebrow="Другие решения" title="Посмотрите похожие конструкции"><div className="service-cards">{related.map(([label,href])=><a className="service-card" href={href} key={href}><span>{label}</span><b>Подробнее ↗</b></a>)}</div></ServiceSection>
 </section>}
 
-export function EquipmentSection(){return <section className="commercial-details equipment-section"><ServiceSection eyebrow="Комплектация" title="Дополнительное оснащение"><p>При необходимости мы можем доукомплектовать вашу плавучую конструкцию оборудованием для безопасного использования, швартовки и защиты от повреждений.</p><div className="service-cards equipment-cards"><div className="service-card"><span><strong>Лестницы и трапы</strong><p>Для безопасного спуска в воду и подъёма на понтон. Изготавливаются из коррозионностойкой нержавеющей стали.</p></span></div><div className="service-card"><span><strong>Кнехты</strong><p>Элементы для надёжной швартовки лодок и катеров. Изготавливаем прямые и крестовые модели с ограничителями для троса.</p></span></div><div className="service-card"><span><strong>Ограждения</strong><p>Металлические, деревянные или хромированные ограждения для повышения безопасности и удобства на платформе.</p></span></div><div className="service-card"><span><strong>Якорная система</strong><p>Удерживает плавучую конструкцию в заданном месте с помощью якорей и соединительных цепей.</p></span></div><div className="service-card"><span><strong>Привальный брус</strong><p>Защищает борта лодок и катеров от ударов и потёртостей во время швартовки и стоянки.</p></span></div><div className="service-card"><span><strong>Защитный борт</strong><p>Дополнительная защита краёв настила от износа и повреждений, в том числе с применением алюминиевого профиля.</p></span></div><div className="service-card"><span><strong>Док для судна</strong><p>Компактное место для безопасного хранения лодки, катера или гидроцикла рядом с основным пирсом.</p></span></div></div></ServiceSection></section>}
+const equipmentItems=[
+  ["Лестницы и трапы","Для безопасного спуска в воду и подъёма на понтон. Изготавливаются из коррозионностойкой нержавеющей стали."],
+  ["Кнехты","Элементы для надёжной швартовки лодок и катеров. Изготавливаем прямые и крестовые модели с ограничителями для троса."],
+  ["Ограждения","Металлические, деревянные или хромированные ограждения для повышения безопасности и удобства на платформе."],
+  ["Якорная система","Удерживает плавучую конструкцию в заданном месте с помощью якорей и соединительных цепей."],
+  ["Привальный брус","Защищает борта лодок и катеров от ударов и потёртостей во время швартовки и стоянки."],
+  ["Защитный борт","Дополнительная защита краёв настила от износа и повреждений, в том числе с применением алюминиевого профиля."],
+  ["Док для судна","Компактное место для безопасного хранения лодки, катера или гидроцикла рядом с основным пирсом."]
+] as const;
+export function EquipmentSection(){
+  const [selectedEquipment,setSelectedEquipment]=useState(0);
+  const [selectedTitle,selectedText]=equipmentItems[selectedEquipment];
+  return <section className="commercial-details equipment-section">
+    <ServiceSection eyebrow="Комплектация" title="Дополнительное оснащение">
+      <p>Подберите необходимое оснащение: выбирайте пункт слева, а описание будет меняться справа.</p>
+      <div className="equipment-layout">
+        <nav className="equipment-menu" aria-label="Дополнительное оснащение">
+          {equipmentItems.map(([title],index)=><button type="button" key={title} className={selectedEquipment===index?"equipment-menu-item active":"equipment-menu-item"} aria-pressed={selectedEquipment===index} onClick={()=>setSelectedEquipment(index)}>{title}<span aria-hidden="true">→</span></button>)}
+        </nav>
+        <div className="equipment-content" aria-live="polite">
+          <span className="eyebrow">Оснащение {String(selectedEquipment+1).padStart(2,"0")}</span>
+          <h3>{selectedTitle}</h3>
+          <p>{selectedText}</p>
+          <a className="outline-link" href="/kalkulyator">Добавить в расчёт →</a>
+        </div>
+      </div>
+    </ServiceSection>
+  </section>
+}
