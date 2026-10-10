@@ -72,6 +72,33 @@ const equipmentItems=[
   ["Защитный борт","Дополнительная защита краёв настила от износа и повреждений, в том числе с применением алюминиевого профиля."],
   ["Док для судна","Компактное место для безопасного хранения лодки, катера или гидроцикла рядом с основным пирсом."]
 ] as const;
+const pierPriceItems=[
+  ["2 × 1,5 м","65 кг","200–300 кг","79 000 ₽"],
+  ["2 × 2 м","144 кг","200–300 кг","110 000 ₽"],
+  ["3 × 1,5 м","102 кг","300–450 кг","150 000 ₽"],
+  ["3 × 2 м","220 кг","350–500 кг","170 000 ₽"],
+  ["3 × 2,4 м","184 кг","400–550 кг","190 000 ₽"],
+  ["5 × 10 м","1 884 кг","4 000–5 000 кг","1 100 000 ₽"],
+  ["6 × 1,5 м","203 кг","500–700 кг","239 000 ₽"],
+  ["6 × 2 м","203 кг","500–700 кг","248 000 ₽"],
+  ["6 × 2,4 м","203 кг","500–700 кг","257 500 ₽"],
+  ["6 × 3 м","360 кг","500–700 кг","280 000 ₽"]
+] as const;
+export function PierPricingSection(){
+  return <section className="commercial-details pier-pricing-section">
+    <ServiceSection eyebrow="Цены и размеры" title="Стоимость пирсов на понтонах">
+      <p className="pier-pricing-lead">Ориентировочные цены на популярные размеры плавучих пирсов. Для нестандартных габаритов и комплектации подготовим индивидуальный расчёт.</p>
+      <div className="pier-pricing-table-wrap">
+        <table className="pier-pricing-table">
+          <thead><tr><th>Размер</th><th>Вес</th><th>Нагрузка</th><th>Стоимость</th><th aria-label="Заявка"></th></tr></thead>
+          <tbody>{pierPriceItems.map(([size,weight,load,price])=><tr key={size}><td data-label="Размер">{size}</td><td data-label="Вес">{weight}</td><td data-label="Нагрузка">{load}</td><td data-label="Стоимость" className="pier-price">{price}</td><td className="pier-price-action"><a className="pier-price-link" href="/kalkulyator">Оформить заявку <span aria-hidden="true">↗</span></a></td></tr>)}</tbody>
+        </table>
+      </div>
+      <div className="pier-pricing-footer"><p>Не нашли подходящий размер? Изготовим пирс по вашим параметрам.</p><a className="cta-dark" href="/kalkulyator">Заказать пирс по своим размерам <span>→</span></a></div>
+    </ServiceSection>
+  </section>
+}
+
 export function EquipmentSection(){
   const [selectedEquipment,setSelectedEquipment]=useState(0);
   const [selectedTitle,selectedText]=equipmentItems[selectedEquipment];
