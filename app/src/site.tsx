@@ -77,7 +77,6 @@ export function EquipmentSection(){
   const [selectedTitle,selectedText]=equipmentItems[selectedEquipment];
   return <section className="commercial-details equipment-section">
     <ServiceSection eyebrow="Комплектация" title="Дополнительное оснащение">
-      <p>Подберите необходимое оснащение: выбирайте пункт слева, а описание будет меняться справа.</p>
       <div className="equipment-layout">
         <nav className="equipment-menu" aria-label="Дополнительное оснащение">
           {equipmentItems.map(([title],index)=><button type="button" key={title} className={selectedEquipment===index?"equipment-menu-item active":"equipment-menu-item"} aria-pressed={selectedEquipment===index} onClick={()=>setSelectedEquipment(index)}>{title}<span aria-hidden="true">→</span></button>)}
