@@ -643,3 +643,31 @@ main:has(.journey-wrap) .projects-section > .center-link{
 .equipment-content p{max-width:620px;color:var(--pp-muted);font-size:16px;line-height:1.7;margin:0 0 28px}
 @media(max-width:760px){.equipment-layout{grid-template-columns:1fr;gap:14px}.equipment-menu{display:grid;grid-template-columns:1fr 1fr}.equipment-menu-item{padding:13px 12px;font-size:13px;border-right:1px solid var(--pp-line)}.equipment-menu-item:nth-child(2n){border-right:0}.equipment-content{min-height:220px;padding:24px}}
 @media(max-width:420px){.equipment-menu{grid-template-columns:1fr}.equipment-menu-item{border-right:0}}
+
+
+/* Pier pricing table on the piers-and-berths page */
+.pier-pricing-section .service-section-body{min-width:0}
+.pier-pricing-lead{max-width:760px;margin:0 0 26px;color:var(--pp-muted);font-size:15px;line-height:1.65}
+.pier-pricing-table-wrap{width:100%;overflow-x:auto;border:1px solid var(--pp-line);background:#fff}
+.pier-pricing-table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}
+.pier-pricing-table th{padding:16px 14px;background:#ece8de;color:#52646b;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.pier-pricing-table td{padding:15px 14px;border-top:1px solid var(--pp-line);white-space:nowrap}
+.pier-pricing-table tbody tr:hover{background:#f8f7f2}
+.pier-pricing-table .pier-price{font-size:15px;font-weight:750;color:var(--pp-ink)}
+.pier-price-link{display:inline-flex;align-items:center;gap:7px;color:var(--pp-blue-dark);font-size:11px;font-weight:750}
+.pier-price-link:hover{text-decoration:underline;text-underline-offset:4px}
+.pier-pricing-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:24px;padding:22px 24px;background:#ece8de}
+.pier-pricing-footer p{margin:0;color:var(--pp-ink);font-size:14px;line-height:1.5}
+.pier-pricing-footer .cta-dark{flex-shrink:0}
+@media(max-width:760px){
+  .pier-pricing-table-wrap{overflow:visible;border:0;background:transparent}
+  .pier-pricing-table,.pier-pricing-table tbody{display:block;width:100%}
+  .pier-pricing-table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .pier-pricing-table tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-bottom:12px;padding:16px;background:#fff;border:1px solid var(--pp-line)}
+  .pier-pricing-table td{display:flex;flex-direction:column;gap:4px;padding:0;border:0;white-space:normal;font-size:13px}
+  .pier-pricing-table td::before{content:attr(data-label);color:var(--pp-muted);font-size:10px;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
+  .pier-pricing-table td.pier-price{font-size:16px}
+  .pier-pricing-table td.pier-price-action{grid-column:1/-1;padding-top:10px;border-top:1px solid var(--pp-line)}
+  .pier-pricing-table td.pier-price-action::before{display:none}
+  .pier-pricing-footer{align-items:flex-start;flex-direction:column;padding:20px}
+}
