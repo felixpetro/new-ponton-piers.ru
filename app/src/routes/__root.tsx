@@ -21,7 +21,7 @@ const SITE_URL = (import.meta.env.VITE_SITE_URL || "https://ponton-piers.ru").re
 const DEFAULT_TITLE = "Понтон Пирс";
 const DEFAULT_DESCRIPTION =
   "Понтоны, пирсы и плавучие конструкции на заказ. Проектирование, производство, доставка и монтаж по России.";
-const IS_STAGING = import.meta.env.VITE_SITE_ENV === "staging" || SITE_URL.includes("new.");
+const IS_STAGING = import.meta.env.VITE_SITE_ENV === "staging" || new URL(SITE_URL).hostname.toLowerCase() === "new.ponton-piers.ru";
 
 type SeoEntry = {
   title: string;

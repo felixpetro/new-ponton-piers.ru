@@ -134,6 +134,45 @@ jobs:
             fi
             echo "Found expected text: $expected"
           }
+          check_public_routes() {
+            echo "=== Checking HTTP status of every public route ==="
+            routes=(
+              "/"
+              "/plavuchie-konstrukcii"
+              "/pirsy-prichaly"
+              "/plavuchie-garazhi-ellingi"
+              "/pontony-dlya-hausbota"
+              "/pontony-dlya-bani"
+              "/pontony-dlya-besedki"
+              "/pontony-dlya-sceny"
+              "/pontony-dlya-katerov"
+              "/pontony-dlya-restorana"
+              "/pontony-dlya-sadkov"
+              "/uslugi"
+              "/registraciya-plavuchih-konstrukcii"
+              "/dogovor-vodopolzovaniya"
+              "/texnicheskoe-obsluzhivanie-pirsov"
+              "/o-kompanii"
+              "/proizvodstvo"
+              "/otzyvy"
+              "/faq"
+              "/kontakty"
+              "/kalkulyator"
+              "/blog"
+              "/blog/kak-vybrat-ponton"
+              "/blog/pnd-ili-metall"
+              "/blog/podgotovka-mesta-pirs"
+              "/blog/dok-dlya-katera"
+            )
+            for path in "${routes[@]}"; do
+              code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "https://new.ponton-piers.ru${path}")"
+              if [ "$code" != "200" ]; then
+                echo "Public route failed: $path (HTTP $code)"
+                return 1
+              fi
+              echo "HTTP 200: $path"
+            done
+          }
           check_staging_seo_files() {
             echo "=== Validating staging robots.txt and sitemap.xml ==="
             robots="$(curl -fsSL --max-time 30 https://new.ponton-piers.ru/robots.txt)"
@@ -169,6 +208,7 @@ jobs:
                check_page "https://new.ponton-piers.ru/robots.txt" "Disallow: /" &&
                check_page "https://new.ponton-piers.ru/sitemap.xml" "<urlset" &&
                check_staging_seo_files &&
+               check_public_routes &&
                check_page "https://new.ponton-piers.ru/proekty" "Решения для частных и коммерческих объектов"; then
               exit 0
             fi

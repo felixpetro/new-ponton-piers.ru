@@ -42,4 +42,22 @@ describe("SEO files", () => {
     expect(siteComponents).not.toContain('href="/proekty"');
     expect(homepage).not.toContain('href="/proekty"');
   });
+  test("SEO staging detection uses the exact staging hostname", () => {
+    const rootRoute = readFileSync(new URL("../src/routes/__root.tsx", import.meta.url), "utf8");
+    expect(rootRoute).toContain('new URL(SITE_URL).hostname.toLowerCase() === "new.ponton-piers.ru"');
+    expect(rootRoute).not.toContain('SITE_URL.includes("new.")');
+  });
+
+  test("scene page does not render duplicate equipment sections", () => {
+    const sceneRoute = readFileSync(new URL("../src/routes/pontony-dlya-sceny.tsx", import.meta.url), "utf8");
+    expect(sceneRoute.match(/<EquipmentSection\s*\/>/g) || []).toHaveLength(1);
+  });
+
+  test("tablet navigation keeps both the estimate CTA and burger menu available", () => {
+    const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+    expect(styles).toContain("@media(max-width:1000px)");
+    expect(styles).toContain(".site-header .header-cta{display:inline-flex!important");
+    expect(styles).toContain(".site-header .mobile-menu-toggle{display:flex!important");
+    expect(styles).toContain("@media(min-width:1001px){.mobile-menu-toggle,.mobile-nav{display:none!important}}");
+  });
 });
