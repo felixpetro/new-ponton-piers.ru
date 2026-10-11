@@ -100,7 +100,6 @@ function Page() {
         </div>
       </ServiceSection>
 
-      <CTA />
     </SimplePage>
   );
 }
