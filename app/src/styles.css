@@ -674,7 +674,8 @@ main:has(.journey-wrap) .projects-section > .center-link{
 
 
 /* Personal-data consent: compact checkbox aligned to the first line; readable inline text and links. */
-.calc-card label.privacy-consent,
+.calc-card label.privacy-notice{display:block;margin:0 0 10px;color:var(--muted,#667085);font-size:12px;line-height:1.5}
+.privacy-consent,
 .big-form label.privacy-consent{
   display:grid;
   grid-template-columns:16px minmax(0,1fr);

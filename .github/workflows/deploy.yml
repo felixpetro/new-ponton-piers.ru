@@ -6,7 +6,34 @@ on:
       - main
 
 jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Run automated tests
+        run: bun run test
+      - name: Run lint
+        run: bun run lint
+      - name: Build staging configuration
+        env:
+          SITE_URL: https://new.ponton-piers.ru
+          SITE_ENV: staging
+          VITE_SITE_URL: https://new.ponton-piers.ru
+          VITE_SITE_ENV: staging
+        run: bun run build
+
   deploy:
+    needs: validate
     runs-on: ubuntu-24.04
 
     steps:
@@ -68,8 +95,12 @@ jobs:
               echo "=== Dependencies unchanged; skip install ==="
             fi
 
-            echo "=== Remove stale SEO files ==="
-            rm -f "$REPO/sitemap.xml" "$REPO/robots.txt" "$APP/sitemap.xml" "$APP/robots.txt" "$APP/public/sitemap.xml" "$APP/public/robots.txt"
+            echo "=== Configure staging SEO and generate robots/sitemap ==="
+            export SITE_URL="https://new.ponton-piers.ru"
+            export SITE_ENV="staging"
+            export VITE_SITE_URL="$SITE_URL"
+            export VITE_SITE_ENV="$SITE_ENV"
+            /usr/local/bin/bun run generate:seo
 
             echo "=== Remove previous build ==="
             rm -rf "$APP/.output"
@@ -113,7 +144,11 @@ jobs:
                check_page "https://new.ponton-piers.ru/texnicheskoe-obsluzhivanie-pirsov" "Обслуживание по фактическому состоянию" &&
                check_page "https://new.ponton-piers.ru/privacy" "ООО «ВУОКСА»" &&
                check_page "https://new.ponton-piers.ru/soglasie" "Согласие на обработку персональных данных" &&
-               check_page "https://new.ponton-piers.ru/kalkulyator" "Я даю согласие на обработку персональных данных"; then
+               check_page "https://new.ponton-piers.ru/kalkulyator" "Я даю согласие на обработку персональных данных" &&
+               check_page "https://new.ponton-piers.ru/" "noindex, follow" &&
+               check_page "https://new.ponton-piers.ru/robots.txt" "Disallow: /" &&
+               check_page "https://new.ponton-piers.ru/sitemap.xml" "<urlset" &&
+               check_page "https://new.ponton-piers.ru/proekty" "Решения для частных и коммерческих объектов"; then
               exit 0
             fi
             sleep 5

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { landingContentSchema } from "@higgsfield/app-landing";
 import { landingContent } from "../src/landing-content";
 
-describe("scroll-scrub website landing contract", () => {
+describe("public landing and full app route contract", () => {
   test("uses a safe full-app route preview", () => {
     expect(() => landingContentSchema.parse(landingContent)).not.toThrow();
     expect(landingContent.preview).toMatchObject({
@@ -24,9 +24,9 @@ describe("scroll-scrub website landing contract", () => {
     const landingRoute = readFileSync(new URL("../src/routes/index.tsx", import.meta.url), "utf8");
     const appRoute = readFileSync(new URL("../src/routes/app.tsx", import.meta.url), "utf8");
 
-    // scroll-scrub's home IS the site: "/" renders the journey instead of the
-    // stock LandingPage. Everything else about the split is unchanged.
-    expect(landingRoute).toContain("ScrollScrub");
+    // The public homepage presents the company landing; the app route remains separate.
+    expect(landingRoute).toContain("DirectionGrid");
+    expect(landingRoute).toContain("privacy-consent");
     expect(appRoute).toContain('createFileRoute("/app")');
     expect(appRoute).toContain("previewMode");
   });

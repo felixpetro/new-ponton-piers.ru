@@ -17,11 +17,11 @@ import appMetaJson from "../app-meta.json";
 
 declare const __HF_DESIGN_INSPECTOR__: boolean;
 
-const SITE_URL = "https://new.ponton-piers.ru";
+const SITE_URL = (import.meta.env.VITE_SITE_URL || "https://ponton-piers.ru").replace(/\/$/, "");
 const DEFAULT_TITLE = "Понтон Пирс";
 const DEFAULT_DESCRIPTION =
   "Понтоны, пирсы и плавучие конструкции на заказ. Проектирование, производство, доставка и монтаж по России.";
-const IS_STAGING = SITE_URL.includes("new.");
+const IS_STAGING = import.meta.env.VITE_SITE_ENV === "staging" || SITE_URL.includes("new.");
 
 type SeoEntry = {
   title: string;

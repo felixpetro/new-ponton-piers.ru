@@ -1,9 +1,9 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Shell, CTA } from "@/site";
 
 export const Route = createFileRoute("/proekty")({
   beforeLoad: () => {
-    throw notFound();
+    throw redirect({ to: "/o-kompanii" });
   },
   component: Page,
 });

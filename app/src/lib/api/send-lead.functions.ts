@@ -69,16 +69,18 @@ async function sendSmtpMessage(
     if (replies.length) return Promise.resolve(replies.shift()!);
     if (socketError) return Promise.reject(socketError);
     return new Promise((resolve, reject) => {
-      let waiter: ReplyWaiter;
+      const waiterRef: { current?: ReplyWaiter } = {};
       const timer = setTimeout(() => {
-        const index = waiters.indexOf(waiter);
+        const waiter = waiterRef.current;
+        const index = waiter ? waiters.indexOf(waiter) : -1;
         if (index >= 0) waiters.splice(index, 1);
         reject(new Error("SMTP response timeout"));
       }, timeoutMs);
-      waiter = {
+      const waiter: ReplyWaiter = {
         resolve: (reply) => { clearTimeout(timer); resolve(reply); },
         reject: (error) => { clearTimeout(timer); reject(error); },
       };
+      waiterRef.current = waiter;
       waiters.push(waiter);
     });
   };
@@ -175,6 +177,6 @@ export const sendLead = createServerFn({ method: "POST" })
       return { ok: true };
     } catch (error) {
       console.error("Lead email delivery failed:", error instanceof Error ? error.message : "unknown error");
-      throw new Error("Не удалось отправить заявку. Попробуйте позже.");
+      throw new Error("Не удалось отправить заявку. Попробуйте позже.", { cause: error });
     }
   });
