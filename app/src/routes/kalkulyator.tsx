@@ -6,6 +6,10 @@ async function handleLeadSubmit(event: FormEvent<HTMLFormElement>) {
   if (sending) return;
   const form = event.currentTarget;
   const values = new FormData(form);
+  if (values.get('consent') !== 'on') {
+    setFormMessage('Для отправки заявки необходимо согласие на обработку персональных данных.');
+    return;
+  }
   setSending(true);
   setFormMessage('');
   try {
@@ -18,7 +22,7 @@ async function handleLeadSubmit(event: FormEvent<HTMLFormElement>) {
       region: String(values.get('region') || ''),
       source: 'Калькулятор',
       website: String(values.get('website') || ''),
-      consent: values.get('consent') === 'on',
+      consent: true,
     }});
     setFormMessage('Спасибо! Заявка отправлена. Мы свяжемся с вами.');
     form.reset();
