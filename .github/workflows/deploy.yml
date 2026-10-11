@@ -110,7 +110,10 @@ jobs:
                check_page "https://new.ponton-piers.ru/proizvodstvo" "Как организовано изготовление" &&
                check_page "https://new.ponton-piers.ru/registraciya-plavuchih-konstrukcii" "Сначала определяем статус объекта" &&
                check_page "https://new.ponton-piers.ru/dogovor-vodopolzovaniya" "Сначала определяем подходящий порядок" &&
-               check_page "https://new.ponton-piers.ru/texnicheskoe-obsluzhivanie-pirsov" "Обслуживание по фактическому состоянию"; then
+               check_page "https://new.ponton-piers.ru/texnicheskoe-obsluzhivanie-pirsov" "Обслуживание по фактическому состоянию" &&
+               check_page "https://new.ponton-piers.ru/privacy" "ООО «ВУОКСА»" &&
+               check_page "https://new.ponton-piers.ru/soglasie" "Согласие на обработку персональных данных" &&
+               check_page "https://new.ponton-piers.ru/kalkulyator" "Я даю согласие на обработку персональных данных"; then
               exit 0
             fi
             sleep 5
