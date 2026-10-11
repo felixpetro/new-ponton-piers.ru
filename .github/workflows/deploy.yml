@@ -175,6 +175,97 @@ jobs:
               echo "HTTP 200: $path"
             done
           }
+          check_page_metadata() {
+            echo "=== Checking canonical, title, and description in rendered HTML ==="
+            routes=(
+              "/"
+              "/plavuchie-konstrukcii"
+              "/pirsy-prichaly"
+              "/plavuchie-garazhi-ellingi"
+              "/pontony-dlya-hausbota"
+              "/pontony-dlya-bani"
+              "/pontony-dlya-besedki"
+              "/pontony-dlya-sceny"
+              "/pontony-dlya-katerov"
+              "/pontony-dlya-restorana"
+              "/pontony-dlya-sadkov"
+              "/uslugi"
+              "/registraciya-plavuchih-konstrukcii"
+              "/dogovor-vodopolzovaniya"
+              "/texnicheskoe-obsluzhivanie-pirsov"
+              "/o-kompanii"
+              "/proizvodstvo"
+              "/proekty"
+              "/otzyvy"
+              "/faq"
+              "/kontakty"
+              "/kalkulyator"
+              "/privacy"
+              "/soglasie"
+              "/blog"
+              "/blog/kak-vybrat-ponton"
+              "/blog/pnd-ili-metall"
+              "/blog/podgotovka-mesta-pirs"
+              "/blog/dok-dlya-katera"
+            )
+            tmp_html="$(mktemp)"
+            trap 'rm -f "$tmp_html"' RETURN
+            for path in "${routes[@]}"; do
+              url="https://new.ponton-piers.ru${path}"
+              echo "--- Metadata: $path ---"
+              curl -fsSL --max-time 30 "$url" -o "$tmp_html"
+              python3 - "$path" "$tmp_html" <<'PY'
+          import sys
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          path, filename = sys.argv[1], sys.argv[2]
+          html = Path(filename).read_text(encoding="utf-8")
+
+          class HeadParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.title_count = 0
+                  self.title_text = []
+                  self.in_title = False
+                  self.descriptions = []
+                  self.canonicals = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if tag == "title":
+                      self.title_count += 1
+                      self.in_title = True
+                  if tag == "meta" and attrs.get("name", "").lower() == "description":
+                      self.descriptions.append(attrs.get("content", "").strip())
+                  if tag == "link" and "canonical" in attrs.get("rel", "").lower().split():
+                      self.canonicals.append(attrs.get("href", "").strip())
+              def handle_endtag(self, tag):
+                  if tag == "title":
+                      self.in_title = False
+              def handle_data(self, data):
+                  if self.in_title:
+                      self.title_text.append(data.strip())
+
+          parser = HeadParser()
+          parser.feed(html)
+          titles = [" ".join(parser.title_text).strip()]
+          errors = []
+          expected = "https://new.ponton-piers.ru" + (path if path != "/" else "/")
+          if parser.title_count != 1 or not titles[0]:
+              errors.append(f"title tags={parser.title_count}, title={titles[0]!r}")
+          if len(parser.descriptions) != 1 or not parser.descriptions[0]:
+              errors.append(f"description tags={len(parser.descriptions)}, values={parser.descriptions!r}")
+          if len(parser.canonicals) != 1 or parser.canonicals[0] != expected:
+              errors.append(f"canonical tags={len(parser.canonicals)}, values={parser.canonicals!r}, expected={expected!r}")
+          if errors:
+              print("FAIL:", path, " | ".join(errors))
+              sys.exit(1)
+          print(f"OK: {path} | title={titles[0]!r} | description={parser.descriptions[0]!r} | canonical={parser.canonicals[0]}")
+          PY
+            done
+            echo "All public pages have exactly one non-empty title, description, and expected canonical"
+          }
           check_not_found_route() {
             echo "=== Validating unknown-route SEO fallback ==="
             html="$(curl -sSL --max-time 30 https://new.ponton-piers.ru/__audit_missing_route__)"
@@ -219,6 +310,7 @@ jobs:
                check_page "https://new.ponton-piers.ru/sitemap.xml" "<urlset" &&
                check_staging_seo_files &&
                check_public_routes &&
+               check_page_metadata &&
                check_page "https://new.ponton-piers.ru/proekty" "Решения для частных и коммерческих объектов"; then
               exit 0
             fi
