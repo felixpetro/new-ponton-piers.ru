@@ -345,8 +345,9 @@ function buildJsonLd(pathname: string, entry: SeoEntry, canonical: string) {
 
 function buildHead(meta: AppMeta, pathname: string) {
   const entry = SEO[pathname] ?? {
-    title: DEFAULT_TITLE,
-    description: DEFAULT_DESCRIPTION,
+    title: "Страница не найдена | Понтон Пирс",
+    description: "Запрашиваемая страница не найдена. Перейдите в каталог конструкций или свяжитесь с нами.",
+    noindex: true,
   };
   const title = entry.title;
   const description = entry.description;
@@ -408,8 +409,8 @@ function NotFoundComponent() {
       <NotFound
         className="mx-auto max-w-md"
         icon={<span className="text-q-title-md-semi-bold text-q-text-primary">404</span>}
-        title="Page not found"
-        subtitle="The page you're looking for doesn't exist or has been moved."
+        title="Страница не найдена"
+        subtitle="Возможно, адрес изменился или страница была удалена. Перейдите на главную или выберите нужный раздел сайта."
       >
         <Link to="/" className={button({ variant: "primary", size: "md" }, "mt-3")}>
           Go home

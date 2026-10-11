@@ -158,6 +158,8 @@ jobs:
               "/faq"
               "/kontakty"
               "/kalkulyator"
+              "/privacy"
+              "/soglasie"
               "/blog"
               "/blog/kak-vybrat-ponton"
               "/blog/pnd-ili-metall"
@@ -172,6 +174,13 @@ jobs:
               fi
               echo "HTTP 200: $path"
             done
+          }
+          check_not_found_route() {
+            echo "=== Validating unknown-route SEO fallback ==="
+            html="$(curl -sSL --max-time 30 https://new.ponton-piers.ru/__audit_missing_route__)"
+            printf '%s' "$html" | grep -Fq "Страница не найдена"
+            printf '%s' "$html" | grep -Fq "noindex, follow"
+            echo "Unknown routes render a localized not-found page and noindex"
           }
           check_staging_seo_files() {
             echo "=== Validating staging robots.txt and sitemap.xml ==="
@@ -204,6 +213,7 @@ jobs:
                check_page "https://new.ponton-piers.ru/privacy" "ООО «ВУОКСА»" &&
                check_page "https://new.ponton-piers.ru/soglasie" "Согласие на обработку персональных данных" &&
                check_page "https://new.ponton-piers.ru/kalkulyator" "Я даю согласие на обработку персональных данных" &&
+               check_not_found_route &&
                check_page "https://new.ponton-piers.ru/" "noindex, follow" &&
                check_page "https://new.ponton-piers.ru/robots.txt" "Disallow: /" &&
                check_page "https://new.ponton-piers.ru/sitemap.xml" "<urlset" &&

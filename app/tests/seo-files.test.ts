@@ -42,6 +42,13 @@ describe("SEO files", () => {
     expect(siteComponents).not.toContain('href="/proekty"');
     expect(homepage).not.toContain('href="/proekty"');
   });
+  test("unknown routes receive a localized not-found title and noindex fallback", () => {
+    const rootRoute = readFileSync(new URL("../src/routes/__root.tsx", import.meta.url), "utf8");
+    expect(rootRoute).toContain('title: "Страница не найдена | Понтон Пирс"');
+    expect(rootRoute).toContain("noindex: true");
+    expect(rootRoute).toContain('title="Страница не найдена"');
+  });
+
   test("SEO staging detection uses the exact staging hostname", () => {
     const rootRoute = readFileSync(new URL("../src/routes/__root.tsx", import.meta.url), "utf8");
     expect(rootRoute).toContain('new URL(SITE_URL).hostname.toLowerCase() === "new.ponton-piers.ru"');
