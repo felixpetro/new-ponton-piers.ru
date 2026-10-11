@@ -15,7 +15,8 @@ export const PUBLIC_ROUTES = [
 
 export function buildSeoFiles(siteUrl, environment = "production") {
   const baseUrl = String(siteUrl || "https://ponton-piers.ru").replace(/\/$/, "");
-  const staging = environment === "staging" || baseUrl.includes("new.");
+  const hostname = new URL(baseUrl).hostname.toLowerCase();
+  const staging = environment === "staging" || hostname === "new.ponton-piers.ru";
   const robots = staging
     ? "User-agent: *\nDisallow: /\n"
     : [

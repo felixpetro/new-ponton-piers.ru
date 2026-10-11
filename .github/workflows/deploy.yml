@@ -134,6 +134,26 @@ jobs:
             fi
             echo "Found expected text: $expected"
           }
+          check_staging_seo_files() {
+            echo "=== Validating staging robots.txt and sitemap.xml ==="
+            robots="$(curl -fsSL --max-time 30 https://new.ponton-piers.ru/robots.txt)"
+            sitemap="$(curl -fsSL --max-time 30 https://new.ponton-piers.ru/sitemap.xml)"
+            printf '%s' "$robots" | grep -Fxq "Disallow: /"
+            if printf '%s' "$robots" | grep -Fq "Sitemap:"; then
+              echo "Staging robots.txt must not advertise a sitemap"
+              return 1
+            fi
+            printf '%s' "$sitemap" | grep -Fq "<urlset"
+            if printf '%s' "$sitemap" | grep -Fq "<url>"; then
+              echo "Staging sitemap must not contain indexable URLs"
+              return 1
+            fi
+            if printf '%s' "$sitemap" | grep -Fq "new.ponton-piers.ru"; then
+              echo "Staging sitemap must not contain staging URLs"
+              return 1
+            fi
+            echo "Staging robots.txt blocks crawling and sitemap.xml contains zero URLs"
+          }
 
           for i in 1 2 3 4 5; do
             echo "=== Content check attempt $i ==="
@@ -148,6 +168,7 @@ jobs:
                check_page "https://new.ponton-piers.ru/" "noindex, follow" &&
                check_page "https://new.ponton-piers.ru/robots.txt" "Disallow: /" &&
                check_page "https://new.ponton-piers.ru/sitemap.xml" "<urlset" &&
+               check_staging_seo_files &&
                check_page "https://new.ponton-piers.ru/proekty" "Решения для частных и коммерческих объектов"; then
               exit 0
             fi
