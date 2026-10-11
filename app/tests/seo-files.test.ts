@@ -19,6 +19,8 @@ describe("SEO files", () => {
     expect(files.sitemap).not.toContain("/soglasie");
     expect(files.sitemap).not.toContain("/proekty");
     expect(files.sitemap).not.toContain("/app");
+    expect((files.sitemap.match(/<url>/g) || []).length).toBe(PUBLIC_ROUTES.length);
+    expect(files.sitemap).toContain("<loc>https://ponton-piers.ru/o-kompanii</loc>");
     expect(files.urlCount).toBe(PUBLIC_ROUTES.length);
   });
 
@@ -26,12 +28,9 @@ describe("SEO files", () => {
     const files = buildSeoFiles("https://new.ponton-piers.ru", "staging");
     expect(files.robots).toContain("Disallow: /");
     expect(files.robots).not.toContain("Sitemap:");
-    expect(files.robots).not.toContain("Sitemap:");
     expect(files.sitemap).not.toContain("https://new.ponton-piers.ru");
     expect(files.sitemap).not.toContain("<url>");
     expect(files.sitemap).toContain("<urlset");
-    expect((files.sitemap.match(/<url>/g) || []).length).toBe(PUBLIC_ROUTES.length);
-    expect(files.sitemap).toContain("<loc>https://ponton-piers.ru/o-kompanii</loc>");
     expect(files.urlCount).toBe(0);
   });
 
