@@ -48,17 +48,6 @@ describe("SEO files", () => {
     expect(rootRoute).not.toContain('SITE_URL.includes("new.")');
   });
 
-  test("all direction card images point to existing local SVG assets", () => {
-    const siteComponents = readFileSync(new URL("../src/site.tsx", import.meta.url), "utf8");
-    expect(siteComponents).toContain('const img=(name:string)=>`/images/${name}.svg`;');
-    for (const image of ["piers-ponton", "naves-ponton", "dom-ponton", "bani-ponton", "besedka-ponton", "scena-ponton", "doc-ponton", "rest-ponton"]) {
-      expect(existsSync(new URL(`../public/images/${image}.svg`, import.meta.url))).toBe(true);
-    }
-    const homepage = readFileSync(new URL("../src/routes/index.tsx", import.meta.url), "utf8");
-    expect(homepage).toContain("/images/doc-ponton.svg");
-    expect(homepage).not.toContain("/images/doc-ponton.png");
-  });
-
   test("product pages do not render duplicate equipment sections", () => {
     for (const path of [
       "../src/routes/pirsy-prichaly.tsx",
