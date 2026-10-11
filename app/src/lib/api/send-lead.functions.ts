@@ -12,6 +12,7 @@ const leadSchema = z.object({
   region: z.string().trim().max(150),
   source: z.string().trim().min(1).max(60),
   website: z.string().max(200).optional(),
+  consent: z.literal(true),
 });
 
 type SmtpReply = { code: number; lines: string[] };
@@ -158,6 +159,7 @@ export const sendLead = createServerFn({ method: "POST" })
       "Нагрузка, кг: " + (data.load || "не указана"),
       "Регион: " + (data.region || "не указан"),
       "Телефон: " + data.phone,
+      "Согласие на обработку персональных данных: предоставлено через форму",
     ].join("\n");
 
     try {
