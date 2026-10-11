@@ -671,3 +671,36 @@ main:has(.journey-wrap) .projects-section > .center-link{
   .pier-pricing-table td.pier-price-action::before{display:none}
   .pier-pricing-footer{align-items:flex-start;flex-direction:column;padding:20px}
 }
+
+
+/* Personal-data consent: compact checkbox aligned to the first line; readable inline text and links. */
+.calc-card label.privacy-consent,
+.big-form label.privacy-consent{
+  display:grid;
+  grid-template-columns:16px minmax(0,1fr);
+  align-items:start;
+  gap:10px;
+  color:var(--pp-muted);
+  font-size:12px;
+  font-weight:500;
+  line-height:1.5;
+}
+.calc-card .privacy-consent input[type="checkbox"],
+.big-form .privacy-consent input[type="checkbox"]{
+  appearance:auto;
+  width:16px;
+  height:16px;
+  min-width:16px;
+  margin:2px 0 0;
+  padding:0;
+  accent-color:var(--pp-blue);
+  cursor:pointer;
+}
+.privacy-consent span{min-width:0}
+.privacy-consent a{
+  display:inline;
+  color:var(--pp-blue-dark);
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.privacy-consent a:hover{color:var(--pp-blue)}
