@@ -294,6 +294,116 @@ jobs:
             echo "Staging robots.txt blocks crawling and sitemap.xml contains zero URLs"
           }
 
+          check_internal_links() {
+            echo "=== Crawling internal links and checking real HTTP 404s ==="
+            python3 - <<'PY'
+          from collections import deque
+          from html.parser import HTMLParser
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import urljoin, urlsplit, urlunsplit
+          from urllib.request import Request, urlopen
+
+          BASE = "https://new.ponton-piers.ru"
+          START_PATHS = [
+              "/", "/plavuchie-konstrukcii", "/pirsy-prichaly",
+              "/plavuchie-garazhi-ellingi", "/pontony-dlya-hausbota",
+              "/pontony-dlya-bani", "/pontony-dlya-besedki",
+              "/pontony-dlya-sceny", "/pontony-dlya-katerov",
+              "/pontony-dlya-restorana", "/pontony-dlya-sadkov", "/uslugi",
+              "/registraciya-plavuchih-konstrukcii", "/dogovor-vodopolzovaniya",
+              "/texnicheskoe-obsluzhivanie-pirsov", "/o-kompanii",
+              "/proizvodstvo", "/proekty", "/otzyvy", "/faq", "/kontakty",
+              "/kalkulyator", "/privacy", "/soglasie", "/blog",
+              "/blog/kak-vybrat-ponton", "/blog/pnd-ili-metall",
+              "/blog/podgotovka-mesta-pirs", "/blog/dok-dlya-katera",
+          ]
+          BASE_HOST = urlsplit(BASE).netloc
+          errors = []
+          checked = set()
+          html_pages = set()
+          queue = deque(urljoin(BASE, path) for path in START_PATHS)
+
+          class LinkParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.targets = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  candidates = []
+                  if tag == "a":
+                      candidates = ["href"]
+                  elif tag in ("img", "script", "iframe", "source", "audio", "video"):
+                      candidates = ["src", "poster"]
+                  elif tag == "link":
+                      candidates = ["href"]
+                  elif tag == "form":
+                      candidates = ["action"]
+                  for attr in candidates:
+                      value = attrs.get(attr, "").strip()
+                      if value and not value.startswith(("mailto:", "tel:", "javascript:", "data:")):
+                          self.targets.append(value)
+                  if tag == "img" and attrs.get("srcset"):
+                      for candidate in attrs["srcset"].split(","):
+                          value = candidate.strip().split(" ")[0]
+                          if value:
+                              self.targets.append(value)
+
+          def normalize(url):
+              parts = urlsplit(url)
+              path = parts.path or "/"
+              return urlunsplit((parts.scheme, parts.netloc, path, parts.query, ""))
+
+          def fetch(url):
+              request = Request(url, headers={"User-Agent": "PontonPiers-Link-Audit/1.0"})
+              with urlopen(request, timeout=25) as response:
+                  body = response.read()
+                  content_type = response.headers.get("Content-Type", "")
+                  return response.status, response.geturl(), content_type, body
+
+          while queue:
+              raw = queue.popleft()
+              url = normalize(raw)
+              parts = urlsplit(url)
+              if parts.scheme not in ("http", "https") or parts.netloc != BASE_HOST or url in checked:
+                  continue
+              checked.add(url)
+              try:
+                  status, final_url, content_type, body = fetch(url)
+              except HTTPError as exc:
+                  errors.append(f"HTTP {exc.code}: {url}")
+                  continue
+              except (URLError, TimeoutError, OSError) as exc:
+                  errors.append(f"Request failed: {url} ({exc})")
+                  continue
+
+              if status >= 400:
+                  errors.append(f"HTTP {status}: {url}")
+                  continue
+              is_html = "text/html" in content_type.lower()
+              if is_html:
+                  text = body.decode("utf-8", errors="replace")
+                  if "Страница не найдена" in text and "noindex, follow" in text:
+                      errors.append(f"Not-found fallback returned HTTP {status}: {url}")
+                      continue
+                  html_pages.add(url)
+                  parser = LinkParser()
+                  parser.feed(text)
+                  for target in parser.targets:
+                      absolute = normalize(urljoin(final_url, target))
+                      target_parts = urlsplit(absolute)
+                      if target_parts.scheme in ("http", "https") and target_parts.netloc == BASE_HOST:
+                          queue.append(absolute)
+
+          print(f"Checked {len(checked)} unique same-origin URLs, including {len(html_pages)} HTML pages/resources.")
+          if errors:
+              print(f"FAILED: found {len(errors)} broken internal target(s):")
+              for error in errors:
+                  print(f"  - {error}")
+              raise SystemExit(1)
+          print("PASS: no broken internal links, assets, or rendered not-found targets found.")
+          PY
+          }
+
           for i in 1 2 3 4 5; do
             echo "=== Content check attempt $i ==="
             if check_page "https://new.ponton-piers.ru/o-kompanii" "Решения для частных и коммерческих объектов" &&
@@ -311,6 +421,7 @@ jobs:
                check_staging_seo_files &&
                check_public_routes &&
                check_page_metadata &&
+               check_internal_links &&
                check_page "https://new.ponton-piers.ru/proekty" "Решения для частных и коммерческих объектов"; then
               exit 0
             fi
